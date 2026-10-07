@@ -3,6 +3,8 @@ import { MotionConfig } from 'motion/react'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { About } from './sections/About'
 import { Hero } from './sections/Hero'
+import { OpenSource } from './sections/OpenSource'
+import { Projects } from './sections/Projects'
 import { Skills } from './sections/Skills'
 
 /** One failing section shows a short note instead of taking the page down with it. */
@@ -37,6 +39,12 @@ export default function App() {
         </Guard>
         <Guard name="skills">
           <Skills />
+        </Guard>
+        <Guard name="open-source">
+          <OpenSource />
+        </Guard>
+        <Guard name="projects">
+          <Projects />
         </Guard>
       </main>
     </MotionConfig>
