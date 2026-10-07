@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react'
 import { MotionConfig } from 'motion/react'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { Footer } from './components/Footer'
+import { Navbar } from './components/Navbar'
+import { ScrollProgress } from './components/ScrollProgress'
 import { About } from './sections/About'
 import { Contact } from './sections/Contact'
 import { Education } from './sections/Education'
@@ -32,6 +35,8 @@ export default function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <ScrollProgress />
+      <Navbar />
       <main id="main" tabIndex={-1}>
         <Guard name="hero">
           <Hero />
@@ -55,6 +60,7 @@ export default function App() {
           <Contact />
         </Guard>
       </main>
+      <Footer />
     </MotionConfig>
   )
 }
