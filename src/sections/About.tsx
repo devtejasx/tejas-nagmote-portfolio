@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { GraduationCap, Languages, MapPin } from 'lucide-react'
 import { fadeUp, revealViewport, staggerChildren } from '../animations/variants'
 import { Counter } from '../components/Counter'
@@ -75,7 +75,7 @@ export function About() {
                 <span />
                 <p className="mono">~/tejas</p>
               </div>
-              <motion.div
+              <m.div
                 className="terminal__body mono"
                 variants={staggerChildren(0.22, 0.2)}
                 initial="hidden"
@@ -83,7 +83,7 @@ export function About() {
                 viewport={revealViewport}
               >
                 {terminal.map((line) => (
-                  <motion.div key={line.cmd} variants={terminalLine} className="terminal__entry">
+                  <m.div key={line.cmd} variants={terminalLine} className="terminal__entry">
                     <p>
                       <span className="terminal__prompt" aria-hidden="true">
                         $
@@ -91,17 +91,17 @@ export function About() {
                       {line.cmd}
                     </p>
                     <p className="terminal__out">{line.out}</p>
-                  </motion.div>
+                  </m.div>
                 ))}
-                <motion.p variants={terminalLine} aria-hidden="true">
+                <m.p variants={terminalLine} aria-hidden="true">
                   <span className="terminal__prompt">$</span> <span className="terminal__caret" />
-                </motion.p>
-              </motion.div>
+                </m.p>
+              </m.div>
             </TiltCard>
           </Reveal>
         </div>
 
-        <motion.ul
+        <m.ul
           className="about__stats"
           variants={staggerChildren(0.12)}
           initial="hidden"
@@ -109,13 +109,13 @@ export function About() {
           viewport={revealViewport}
         >
           {stats.map((s) => (
-            <motion.li key={s.label} variants={fadeUp} className="stat glass">
+            <m.li key={s.label} variants={fadeUp} className="stat glass">
               <Counter value={s.value} className="stat__value gradient-text" />
               <p className="stat__label">{s.label}</p>
               <p className="stat__context">{s.context}</p>
-            </motion.li>
+            </m.li>
           ))}
-        </motion.ul>
+        </m.ul>
       </div>
     </section>
   )

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, type Variants } from 'motion/react'
+import { m, type Variants } from 'motion/react'
 import { ArrowDown, ArrowRight, Download } from 'lucide-react'
 import { fadeUp, staggerChildren } from '../animations/variants'
 import { LinkIcon } from '../components/BrandIcon'
@@ -19,9 +19,9 @@ const wordReveal: Variants = {
 function RevealWord({ children, className }: { children: string; className?: string }) {
   return (
     <span className="hero__word-mask">
-      <motion.span className={`hero__word ${className ?? ''}`} variants={wordReveal}>
+      <m.span className={`hero__word ${className ?? ''}`} variants={wordReveal}>
         {children}
-      </motion.span>
+      </m.span>
     </span>
   )
 }
@@ -37,31 +37,31 @@ export function Hero() {
       <p className="sr-only">{sceneDescription}</p>
 
       <div className="hero__content container">
-        <motion.div
+        <m.div
           className="hero__copy"
           variants={staggerChildren(0.12, 0.15)}
           initial="hidden"
           animate="visible"
         >
-          <motion.p className="hero__eyebrow mono" variants={fadeUp}>
+          <m.p className="hero__eyebrow mono" variants={fadeUp}>
             <span className="hero__pulse" aria-hidden="true" />
             {profile.location} · PES University
-          </motion.p>
+          </m.p>
 
-          <motion.h1 id="hero-title" className="hero__title" variants={staggerChildren(0.08)}>
+          <m.h1 id="hero-title" className="hero__title" variants={staggerChildren(0.08)}>
             <RevealWord>{first}</RevealWord>{' '}
             <RevealWord className="gradient-text">{last}</RevealWord>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p className="hero__role" variants={fadeUp}>
+          <m.p className="hero__role" variants={fadeUp}>
             {profile.role}
-          </motion.p>
+          </m.p>
 
-          <motion.p className="hero__lead" variants={fadeUp}>
+          <m.p className="hero__lead" variants={fadeUp}>
             {profile.headline}
-          </motion.p>
+          </m.p>
 
-          <motion.div className="hero__actions" variants={fadeUp}>
+          <m.div className="hero__actions" variants={fadeUp}>
             <ButtonLink
               href="#projects"
               variant="primary"
@@ -76,9 +76,9 @@ export function Hero() {
             >
               Resume
             </ButtonLink>
-          </motion.div>
+          </m.div>
 
-          <motion.ul className="hero__links" variants={fadeUp} aria-label="Profiles">
+          <m.ul className="hero__links" variants={fadeUp} aria-label="Profiles">
             {heroLinks.map((l) => (
               <li key={l.id}>
                 <ButtonLink
@@ -91,11 +91,11 @@ export function Hero() {
                 </ButtonLink>
               </li>
             ))}
-          </motion.ul>
-        </motion.div>
+          </m.ul>
+        </m.div>
       </div>
 
-      <motion.p
+      <m.p
         className="hero__pipeline mono"
         aria-hidden="true"
         initial={{ opacity: 0 }}
@@ -103,7 +103,7 @@ export function Hero() {
         transition={{ delay: 1.4, duration: 1 }}
       >
         client <span>→</span> api <span>→</span> service <span>→</span> redis · postgresql
-      </motion.p>
+      </m.p>
 
       <a href="#about" className="hero__scroll">
         <span>Scroll</span>

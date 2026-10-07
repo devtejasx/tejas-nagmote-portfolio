@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import { ChevronDown, GitMerge } from 'lucide-react'
 import { pullUrl } from '../data/openSource'
 import type { MergedPullRequest } from '../data/pullRequests'
@@ -65,7 +65,7 @@ export function PullRequestList({ repo, pullRequests, collapseAfter = 1 }: PullR
       </button>
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
+          <m.div
             id={panelId}
             key="panel"
             className="pr-panel"
@@ -75,7 +75,7 @@ export function PullRequestList({ repo, pullRequests, collapseAfter = 1 }: PullR
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
             <Items repo={repo} pullRequests={sorted} />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

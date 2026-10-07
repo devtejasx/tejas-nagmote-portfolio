@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import { ChevronDown } from 'lucide-react'
 import { ArchitectureDiagram } from '../components/ArchitectureDiagram'
 import { Badges } from '../components/Badges'
@@ -7,7 +7,6 @@ import { GitHubIcon } from '../components/BrandIcon'
 import { ButtonLink } from '../components/Button'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
-import { TiltCard } from '../components/TiltCard'
 import { projects, type Project } from '../data/projects'
 import './Projects.css'
 
@@ -17,7 +16,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const titleId = useId()
 
   return (
-    <TiltCard as="article" className="project glass" maxTilt={1.5}>
+    <article className="project glass">
       <div className="project__info">
         <div className="project__meta">
           <span className="project__index mono">{String(index + 1).padStart(2, '0')}</span>
@@ -50,7 +49,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
         <AnimatePresence initial={false}>
           {expanded && (
-            <motion.div
+            <m.div
               id={detailsId}
               key="details"
               className="project__details"
@@ -72,7 +71,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   variant="feature"
                 />
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
@@ -80,7 +79,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="project__diagram">
         <ArchitectureDiagram diagram={project.diagram} />
       </div>
-    </TiltCard>
+    </article>
   )
 }
 

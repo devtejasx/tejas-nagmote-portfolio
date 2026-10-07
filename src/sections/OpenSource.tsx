@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { ArrowUpRight, GitPullRequest } from 'lucide-react'
 import { fadeUp, revealViewport, staggerChildren } from '../animations/variants'
 import { Counter } from '../components/Counter'
@@ -61,7 +61,7 @@ function monthTicks() {
 
 function Distribution() {
   return (
-    <motion.ul
+    <m.ul
       className="oss-bars"
       aria-label="Merged pull requests per project"
       variants={staggerChildren(0.08, 0.2)}
@@ -73,7 +73,7 @@ function Distribution() {
         <li key={p.repo} className="oss-bars__row">
           <span className="oss-bars__name">{p.name}</span>
           <span className="oss-bars__track" aria-hidden="true">
-            <motion.span
+            <m.span
               className="oss-bars__fill"
               variants={{
                 hidden: { scaleX: 0 },
@@ -85,7 +85,7 @@ function Distribution() {
           <span className="oss-bars__count mono">{p.pullRequests.length}</span>
         </li>
       ))}
-    </motion.ul>
+    </m.ul>
   )
 }
 
@@ -226,7 +226,7 @@ export function OpenSource() {
           ))}
         </div>
 
-        <motion.div
+        <m.div
           className="oss__others"
           variants={staggerChildren(0.08)}
           initial="hidden"
@@ -234,11 +234,11 @@ export function OpenSource() {
           viewport={{ once: true, amount: 0.1 }}
         >
           {others.map((p) => (
-            <motion.div key={p.repo} variants={fadeUp} className="oss__cell">
+            <m.div key={p.repo} variants={fadeUp} className="oss__cell">
               <CompactCard project={p} />
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
 
         <p className="oss__footnote">
           Every pull request listed here links to the merged PR on GitHub.

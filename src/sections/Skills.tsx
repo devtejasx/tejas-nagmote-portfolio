@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import {
   BookOpen,
   Cloud,
@@ -57,7 +57,7 @@ export function Skills() {
           </p>
         </SectionHeading>
 
-        <motion.ul
+        <m.ul
           className="skills__grid"
           variants={staggerChildren(0.07)}
           initial="hidden"
@@ -67,7 +67,7 @@ export function Skills() {
           {ordered.map((category) => {
             const Icon = icons[category.id]
             return (
-              <motion.li
+              <m.li
                 key={category.id}
                 variants={fadeUp}
                 className={`skills__cell ${wide.has(category.id) ? 'skills__cell--wide' : ''}`}
@@ -85,7 +85,7 @@ export function Skills() {
                     </span>
                   </div>
                   <h3 className="skill-card__title">{category.title}</h3>
-                  <motion.ul
+                  <m.ul
                     className="skill-card__list"
                     variants={staggerChildren(0.05, 0.15)}
                     initial="hidden"
@@ -93,16 +93,16 @@ export function Skills() {
                     viewport={revealViewport}
                   >
                     {category.skills.map((skill) => (
-                      <motion.li key={skill} variants={chip} className="skill-chip">
+                      <m.li key={skill} variants={chip} className="skill-chip">
                         {skill}
-                      </motion.li>
+                      </m.li>
                     ))}
-                  </motion.ul>
+                  </m.ul>
                 </TiltCard>
-              </motion.li>
+              </m.li>
             )
           })}
-        </motion.ul>
+        </m.ul>
       </div>
     </section>
   )

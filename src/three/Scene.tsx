@@ -1,5 +1,5 @@
-import { useMemo, useState, type RefObject } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useEffect, useMemo, useState, type RefObject } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { PerformanceMonitor } from '@react-three/drei'
 import { Vector3 } from 'three'
 import type { RenderProfile } from '../utils/device'
@@ -34,6 +34,24 @@ function CameraRig({ reduced }: { reduced: boolean }) {
   return null
 }
 
+/** Drives a frameloop="demand" canvas at a fixed rate instead of every display refresh. */
+function FrameLimiter({ fps }: { fps: number }) {
+  const invalidate = useThree((s) => s.invalidate)
+  useEffect(() => {
+    const interval = 1000 / fps
+    let last = 0
+    let raf = requestAnimationFrame(function tick(now) {
+      raf = requestAnimationFrame(tick)
+      if (now - last >= interval - 2) {
+        last = now
+        invalidate()
+      }
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [fps, invalidate])
+  return null
+}
+
 export default function Scene({
   frameloop,
   profile,
@@ -43,11 +61,14 @@ export default function Scene({
   onContextLost,
 }: SceneProps) {
   const [maxDpr, setMaxDpr] = useState(profile.dpr[1])
+  // Low-end devices, and any device that cannot hold its frame rate, render at 30 fps.
+  const [capped, setCapped] = useState(profile.tier === 'low')
+  const limit = frameloop === 'always' && capped
 
   return (
     <Canvas
       className="hero-canvas"
-      frameloop={frameloop}
+      frameloop={limit ? 'demand' : frameloop}
       dpr={[profile.dpr[0], maxDpr]}
       camera={{ position: [0, 0.4, 9], fov: 40, near: 0.1, far: 60 }}
       gl={{ antialias: profile.antialias, alpha: true, powerPreference: 'high-performance' }}
@@ -64,7 +85,13 @@ export default function Scene({
         )
       }}
     >
-      <PerformanceMonitor onDecline={() => setMaxDpr(1)} />
+      {limit && <FrameLimiter fps={30} />}
+      <PerformanceMonitor
+        onDecline={() => {
+          setMaxDpr(1)
+          setCapped(true)
+        }}
+      />
       <fog attach="fog" args={['#05060a', 9, 24]} />
       <ambientLight intensity={0.4} />
       <pointLight position={[4, 4, 5]} intensity={45} color="#5b8cff" />

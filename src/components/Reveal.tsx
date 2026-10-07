@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { motion, type Variants } from 'motion/react'
+import { m, type Variants } from 'motion/react'
 import { fadeUp, revealViewport } from '../animations/variants'
 
 interface RevealProps {
@@ -18,7 +18,7 @@ export function Reveal({
   variants = fadeUp,
   as = 'div',
 }: RevealProps) {
-  const Component = motion[as]
+  const Component = m[as]
   return (
     <Component
       className={className}

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import { Download, Menu, X } from 'lucide-react'
 import { sections } from '../data/navigation'
 import { links, profile } from '../data/profile'
@@ -67,7 +67,7 @@ export function Navbar() {
   return (
     <header className={`nav ${scrolled || open ? 'nav--solid' : ''}`}>
       <nav className="nav__bar container" aria-label="Primary">
-        <a href="#home" className="nav__brand" aria-label={`${profile.name}, back to top`}>
+        <a href="#home" className="nav__brand">
           <span className="nav__mark mono" aria-hidden="true">
             TN
           </span>
@@ -83,7 +83,7 @@ export function Navbar() {
                 aria-current={active === s.id ? 'location' : undefined}
               >
                 {active === s.id && (
-                  <motion.span
+                  <m.span
                     layoutId="nav-active"
                     className="nav__indicator"
                     transition={{ type: 'spring', stiffness: 420, damping: 36 }}
@@ -120,7 +120,7 @@ export function Navbar() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             ref={panelRef}
             id="mobile-menu"
             className="nav__panel"
@@ -133,7 +133,7 @@ export function Navbar() {
             <nav aria-label="Mobile">
               <ul className="nav__panel-links container">
                 {sections.map((s, i) => (
-                  <motion.li
+                  <m.li
                     key={s.id}
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -150,7 +150,7 @@ export function Navbar() {
                       </span>
                       {s.label}
                     </a>
-                  </motion.li>
+                  </m.li>
                 ))}
               </ul>
             </nav>
@@ -179,7 +179,7 @@ export function Navbar() {
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

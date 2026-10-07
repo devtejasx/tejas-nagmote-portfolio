@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { fadeUp, revealViewport, staggerChildren } from '../animations/variants'
 
 interface SectionHeadingProps {
@@ -12,26 +12,26 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ index, eyebrow, title, id, children }: SectionHeadingProps) {
   return (
-    <motion.header
+    <m.header
       className="section-heading"
       variants={staggerChildren(0.1)}
       initial="hidden"
       whileInView="visible"
       viewport={revealViewport}
     >
-      <motion.p className="section-heading__eyebrow mono" variants={fadeUp}>
+      <m.p className="section-heading__eyebrow mono" variants={fadeUp}>
         <span className="section-heading__index">{index}</span>
         <span aria-hidden="true">/</span>
         {eyebrow}
-      </motion.p>
-      <motion.h2 id={id} className="section-heading__title" variants={fadeUp}>
+      </m.p>
+      <m.h2 id={id} className="section-heading__title" variants={fadeUp}>
         {title}
-      </motion.h2>
+      </m.h2>
       {children && (
-        <motion.div className="section-heading__lead" variants={fadeUp}>
+        <m.div className="section-heading__lead" variants={fadeUp}>
           {children}
-        </motion.div>
+        </m.div>
       )}
-    </motion.header>
+    </m.header>
   )
 }
