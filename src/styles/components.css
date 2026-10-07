@@ -1,0 +1,206 @@
+/* --------------------------------------------------------------- buttons */
+.btn {
+  --btn-bg: var(--surface);
+  --btn-border: var(--border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  transition:
+    transform 0.25s var(--ease-out),
+    background-color 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  --btn-bg: var(--surface-hover);
+  --btn-border: rgb(255 255 255 / 0.28);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  --btn-bg: var(--gradient);
+  --btn-border: transparent;
+  color: #fff;
+  background: var(--gradient);
+  box-shadow:
+    0 8px 28px -8px rgb(91 140 255 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.25);
+}
+
+.btn--primary:hover {
+  background: var(--gradient);
+  box-shadow:
+    0 12px 36px -8px rgb(157 107 255 / 0.6),
+    inset 0 1px 0 rgb(255 255 255 / 0.3);
+}
+
+.btn--ghost {
+  --btn-border: transparent;
+  --btn-bg: transparent;
+  padding-inline: 14px;
+  color: var(--text-muted);
+}
+
+.btn--ghost:hover {
+  color: var(--text);
+  --btn-bg: var(--surface);
+}
+
+/* ---------------------------------------------------------------- badges */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgb(255 255 255 / 0.03);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.badges--tech .badge {
+  border-color: rgb(91 140 255 / 0.25);
+  background: rgb(91 140 255 / 0.07);
+  color: #c4d3ff;
+}
+
+/* ------------------------------------------------------- section heading */
+.section-heading {
+  display: grid;
+  gap: 18px;
+  max-width: 760px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+
+.section-heading__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-heading__index {
+  color: var(--blue);
+}
+
+.section-heading__title {
+  font-size: clamp(2.1rem, 5.2vw, 3.6rem);
+}
+
+.section-heading__lead {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  max-width: 64ch;
+}
+
+/* ------------------------------------------------------------- tilt card */
+.tilt-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --spot-x: 50%;
+  --spot-y: 0%;
+  position: relative;
+  transform: perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.45s var(--ease-out);
+  will-change: transform;
+}
+
+.tilt-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--spot-x) var(--spot-y),
+    rgb(120 150 255 / 0.1),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------ text links */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #b9c9ff;
+  font-weight: 500;
+  border-bottom: 1px solid rgb(185 201 255 / 0.25);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.text-link:hover {
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.6);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 148 102 / 0.4);
+  background: rgb(255 148 102 / 0.1);
+  color: #ffc2a6;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-pill::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--warn);
+  box-shadow: 0 0 0 0 rgb(255 148 102 / 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 148 102 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgb(255 148 102 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 148 102 / 0);
+  }
+}

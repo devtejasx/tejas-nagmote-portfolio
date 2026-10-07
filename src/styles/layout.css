@@ -1,0 +1,63 @@
+main:focus {
+  outline: none;
+}
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  height: 2px;
+  background: var(--gradient);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* Section dividers: a hairline that fades out at both ends. */
+.section + .section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(var(--content), calc(100% - var(--gutter) * 2));
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.section-error {
+  padding-block: 48px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- footer */
+.footer {
+  border-top: 1px solid var(--border);
+  padding-block: 28px max(28px, env(safe-area-inset-bottom));
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.footer__built {
+  font-size: 12px;
+}
+
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  transition: color 0.2s;
+}
+
+.footer__top:hover {
+  color: var(--text);
+}
