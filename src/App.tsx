@@ -8,9 +8,11 @@ import { About } from './sections/About'
 import { Contact } from './sections/Contact'
 import { Education } from './sections/Education'
 import { Hero } from './sections/Hero'
+import { Impact } from './sections/Impact'
 import { OpenSource } from './sections/OpenSource'
 import { Projects } from './sections/Projects'
 import { Skills } from './sections/Skills'
+import { Timeline } from './sections/Timeline'
 
 // Animation features download after first paint; until then components render
 // their initial state. `strict` rejects the heavier full `motion` components.
@@ -46,17 +48,23 @@ export default function App() {
           <Guard name="hero">
             <Hero />
           </Guard>
+          <Guard name="impact">
+            <Impact />
+          </Guard>
           <Guard name="about">
             <About />
-          </Guard>
-          <Guard name="skills">
-            <Skills />
           </Guard>
           <Guard name="open-source">
             <OpenSource />
           </Guard>
           <Guard name="projects">
             <Projects />
+          </Guard>
+          <Guard name="skills">
+            <Skills />
+          </Guard>
+          <Guard name="timeline">
+            <Timeline />
           </Guard>
           <Guard name="education">
             <Education />

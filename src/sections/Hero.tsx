@@ -4,12 +4,13 @@ import { ArrowDown, ArrowRight, Download } from 'lucide-react'
 import { fadeUp, staggerChildren } from '../animations/variants'
 import { LinkIcon } from '../components/BrandIcon'
 import { ButtonLink } from '../components/Button'
-import { links, profile } from '../data/profile'
+import { getLink, profile } from '../data/profile'
 import { HeroVisual } from '../three/HeroVisual'
 import { sceneDescription } from '../three/layout'
 import './Hero.css'
 
-const heroLinks = links.filter((l) => l.id !== 'email')
+const github = getLink('github')
+const linkedin = getLink('linkedin')
 
 const wordReveal: Variants = {
   hidden: { y: '105%' },
@@ -61,6 +62,16 @@ export function Hero() {
             {profile.headline}
           </m.p>
 
+          <m.p className="hero__seeking" variants={fadeUp}>
+            <span className="hero__seeking-label mono">Open to</span>
+            {profile.seeking.map((role) => (
+              <span key={role} className="hero__seeking-role">
+                {role}
+              </span>
+            ))}
+            <span className="sr-only"> roles</span>
+          </m.p>
+
           <m.div className="hero__actions" variants={fadeUp}>
             <ButtonLink
               href="#projects"
@@ -69,6 +80,9 @@ export function Hero() {
             >
               View Projects
             </ButtonLink>
+            <ButtonLink href={github.href} external icon={<LinkIcon id="github" size={18} />}>
+              GitHub
+            </ButtonLink>
             <ButtonLink
               href={profile.resumePath}
               download={profile.resumeFileName}
@@ -76,22 +90,10 @@ export function Hero() {
             >
               Resume
             </ButtonLink>
+            <ButtonLink href={linkedin.href} external icon={<LinkIcon id="linkedin" size={18} />}>
+              LinkedIn
+            </ButtonLink>
           </m.div>
-
-          <m.ul className="hero__links" variants={fadeUp} aria-label="Profiles">
-            {heroLinks.map((l) => (
-              <li key={l.id}>
-                <ButtonLink
-                  href={l.href}
-                  external
-                  variant="ghost"
-                  icon={<LinkIcon id={l.id} size={18} />}
-                >
-                  {l.label}
-                </ButtonLink>
-              </li>
-            ))}
-          </m.ul>
         </m.div>
       </div>
 
@@ -105,7 +107,7 @@ export function Hero() {
         client <span>→</span> api <span>→</span> service <span>→</span> redis · postgresql
       </m.p>
 
-      <a href="#about" className="hero__scroll">
+      <a href="#impact" className="hero__scroll">
         <span>Scroll</span>
         <ArrowDown size={16} aria-hidden="true" />
       </a>

@@ -3,7 +3,8 @@ import { openSourceProjects, totalMergedPullRequests } from './openSource'
 import { education } from './education'
 import { links, stats } from './profile'
 import { projects } from './projects'
-import { skillCategories } from './skills'
+import { skillCategories, skillEvidence } from './skills'
+import { timeline } from './timeline'
 
 describe('open-source data matches the resume', () => {
   it('counts 29 merged PRs across 7 projects', () => {
@@ -34,9 +35,7 @@ describe('open-source data matches the resume', () => {
   })
 
   it('agrees with the headline stats', () => {
-    expect(stats.find((s) => s.label === 'Merged pull requests')?.value).toBe(
-      totalMergedPullRequests,
-    )
+    expect(stats.find((s) => s.label === 'Merged PRs')?.value).toBe(totalMergedPullRequests)
     expect(stats.find((s) => s.label === 'Open-source projects')?.value).toBe(
       openSourceProjects.length,
     )
@@ -77,5 +76,50 @@ describe('education', () => {
   it('lists university, HSC and ICSE, newest first', () => {
     expect(education.map((e) => e.end)).toEqual([2027, 2023, 2020])
     expect(education[0].institution).toBe('PES University')
+  })
+})
+
+describe('impact stats', () => {
+  const statFor = (label: string) => stats.find((s) => s.label === label)?.value
+  const prsIn = (name: string) =>
+    openSourceProjects.find((p) => p.name === name)?.pullRequests.length
+
+  it('matches the per-project PR data', () => {
+    expect(statFor('ng-log PRs')).toBe(prsIn('ng-log'))
+    expect(statFor('google/benchmark PRs')).toBe(prsIn('google/benchmark'))
+  })
+
+  it('shows exactly the five resume figures', () => {
+    expect(stats.map((s) => s.value)).toEqual([29, 7, 413, 12, 6])
+  })
+})
+
+describe('skill evidence', () => {
+  const known = new Set([
+    ...projects.map((p) => p.title),
+    ...openSourceProjects.map((p) => p.name),
+    '29 merged open-source PRs',
+  ])
+
+  it('only points at real projects and repositories', () => {
+    for (const [skill, where] of Object.entries(skillEvidence)) {
+      expect(
+        skillCategories.some((c) => c.skills.includes(skill)),
+        skill,
+      ).toBe(true)
+      for (const w of where) expect(known, `${skill} -> ${w}`).toContain(w)
+    }
+  })
+})
+
+describe('timeline', () => {
+  it('uses only years from the education data, plus "Now"', () => {
+    const years = new Set(
+      education
+        .flatMap((e) => [e.start, e.end])
+        .filter(Boolean)
+        .map(String),
+    )
+    for (const stop of timeline) expect(stop.when === 'Now' || years.has(stop.when)).toBe(true)
   })
 })

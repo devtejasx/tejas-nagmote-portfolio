@@ -16,7 +16,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const titleId = useId()
 
   return (
-    <article className="project glass">
+    <article id={`project-${project.id}`} className="project glass">
       <div className="project__info">
         <div className="project__meta">
           <span className="project__index mono">{String(index + 1).padStart(2, '0')}</span>
@@ -98,7 +98,7 @@ export function Projects() {
     <section id="projects" className="section projects" aria-labelledby="projects-title">
       <div className="container">
         <SectionHeading
-          index="04"
+          index="03"
           eyebrow="Projects"
           id="projects-title"
           title="Things I've built."

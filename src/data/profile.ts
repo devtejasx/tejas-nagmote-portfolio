@@ -15,21 +15,23 @@ export const profile = {
   location: 'Bangalore, India',
   email: 'tejasnagmote520@gmail.com',
   spokenLanguages: ['English', 'Hindi', 'Marathi'],
-  /** Hero one-liner, condensed from the resume summary. */
+  /** Hero one-liner, in Tejas's own words. */
   headline:
-    'Building distributed backends with REST/WebSocket APIs, PostgreSQL, Redis and Docker — and fixing concurrency, memory-safety and correctness bugs in widely used C++ codebases.',
+    'I build reliable backend systems, distributed services, and contribute to real-world C++ open-source projects.',
+  /** Roles Tejas is looking for, shown in the hero and About. */
+  seeking: ['SDE', 'Backend', 'Systems', 'C++', 'Distributed systems'],
   /** Resume summary, split into paragraphs for the About section. */
   summary: [
     'Computer Science undergraduate focused on C++ systems and backend engineering, with 29 merged pull requests across 7 external open-source projects.',
     'Experienced in debugging concurrency, memory-safety, and correctness bugs in widely used C++ codebases, and in building distributed backends with REST/WebSocket APIs, PostgreSQL, Redis, Docker, and CI/CD.',
   ],
   focusAreas: [
-    'C++20 systems',
+    'Systems engineering',
     'Backend engineering',
-    'Distributed backends',
-    'Concurrency debugging',
-    'Memory safety',
     'Open-source contribution',
+    'Distributed systems',
+    'Concurrency',
+    'Memory safety',
   ],
   resumePath: 'resume.pdf',
   resumeFileName: 'Tejas_Nagmote_Resume.pdf',
@@ -78,21 +80,28 @@ export interface Stat {
   context: string
 }
 
-/** Only figures stated on the resume. */
+/** The Impact section. Only figures stated on the resume. */
 export const stats: Stat[] = [
-  {
-    value: 29,
-    label: 'Merged pull requests',
-    context: 'Reviewed and merged by external maintainers',
-  },
+  { value: 29, label: 'Merged PRs', context: 'Reviewed and merged by external maintainers' },
   {
     value: 7,
     label: 'Open-source projects',
     context: 'Upstream repositories, external organizations',
   },
+  { value: 413, label: 'GoogleTest tests', context: 'Real-Time Chat Server, in GitHub Actions CI' },
+  { value: 12, label: 'ng-log PRs', context: "Successor to Google's glog" },
+  { value: 6, label: 'google/benchmark PRs', context: "Google's C++ microbenchmark library" },
+]
+
+/** The 15-second summary for recruiters, shown in About. */
+export const atAGlance: { key: string; value: string }[] = [
+  { key: 'role', value: 'C++ Systems & Backend Engineer' },
+  { key: 'builds', value: 'Backend and distributed systems' },
+  { key: 'differentiator', value: '29 merged PRs across 7 external open-source projects' },
+  { key: 'featured', value: 'Real-Time C++ Chat Server' },
+  { key: 'building', value: 'DeployX, a self-service deployment platform' },
   {
-    value: 413,
-    label: 'GoogleTest tests',
-    context: 'Real-Time Chat Server, run in GitHub Actions CI',
+    key: 'depth',
+    value: 'C++, concurrency, memory safety, distributed systems, PostgreSQL, Redis, Docker, AWS',
   },
 ]

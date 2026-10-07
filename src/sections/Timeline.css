@@ -1,0 +1,170 @@
+/*
+ * Phones and tablets: a vertical rail on the left with cards beside it.
+ * Desktop: a horizontal rail across the top with one column per stop.
+ */
+.tl {
+  position: relative;
+}
+
+.tl__rail {
+  position: absolute;
+  left: 21px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--border-strong);
+  overflow: hidden;
+}
+
+.tl__rail-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--blue), var(--violet));
+  box-shadow: 0 0 12px rgb(91 140 255 / 0.6);
+  transform-origin: 50% 0;
+  transform: scaleY(var(--tl-progress, 1));
+}
+
+.tl__list {
+  position: relative;
+  display: grid;
+  gap: 20px;
+}
+
+.tl__stop {
+  position: relative;
+  padding-left: 62px;
+}
+
+.tl__node {
+  position: absolute;
+  left: 0;
+  top: 18px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #c8d5ff;
+  background:
+    linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+    var(--gradient) border-box;
+  border: 2px solid transparent;
+  box-shadow: var(--glow-blue);
+}
+
+/* The present: a live, pulsing node. */
+.tl__stop--engineering .tl__node {
+  color: #fff;
+  animation: tl-pulse 2.4s ease-in-out infinite;
+}
+
+.tl__stop--future .tl__node {
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(var(--border-strong), var(--border-strong)) border-box;
+  box-shadow: none;
+  color: var(--text-dim);
+}
+
+@keyframes tl-pulse {
+  50% {
+    box-shadow:
+      0 0 0 8px rgb(91 140 255 / 0.12),
+      0 0 26px rgb(91 140 255 / 0.55);
+  }
+}
+
+.tl__card {
+  display: grid;
+  gap: 4px;
+  height: 100%;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+}
+
+.tl__stop--engineering .tl__card {
+  border-color: rgb(91 140 255 / 0.35);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(91 140 255 / 0.14), transparent 60%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.05), rgb(255 255 255 / 0.015));
+}
+
+.tl__stop--future .tl__card {
+  border-style: dashed;
+}
+
+.tl__when {
+  color: var(--blue);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tl__title {
+  font-size: 1.15rem;
+}
+
+.tl__place {
+  color: var(--text-dim);
+  font-size: 13.5px;
+}
+
+.tl__points {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tl__points li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tl__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+@media (min-width: 1024px) {
+  .tl__rail {
+    left: 22px;
+    right: 22px;
+    top: 21px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+  }
+
+  .tl__rail-fill {
+    transform-origin: 0 50%;
+    transform: scaleX(var(--tl-progress, 1));
+  }
+
+  .tl__list {
+    grid-template-columns: 1fr 1fr 1fr 1.6fr 1fr;
+    gap: 14px;
+  }
+
+  .tl__stop {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 18px;
+    padding-left: 0;
+  }
+
+  .tl__node {
+    position: relative;
+    top: 0;
+  }
+}

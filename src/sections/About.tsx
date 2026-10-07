@@ -1,20 +1,12 @@
 import { m } from 'motion/react'
 import { GraduationCap, Languages, MapPin } from 'lucide-react'
-import { fadeUp, revealViewport, staggerChildren } from '../animations/variants'
-import { Counter } from '../components/Counter'
+import { revealViewport, staggerChildren } from '../animations/variants'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { TiltCard } from '../components/TiltCard'
 import { university } from '../data/education'
-import { profile, stats } from '../data/profile'
+import { atAGlance, profile } from '../data/profile'
 import './About.css'
-
-const terminal: { cmd: string; out: string }[] = [
-  { cmd: 'whoami', out: 'tejas-nagmote · cs undergraduate, pes university' },
-  { cmd: 'cat focus', out: 'c++ systems · backend engineering · distributed systems' },
-  { cmd: 'cat debugging', out: 'concurrency · memory safety · correctness' },
-  { cmd: 'ls stack/', out: 'postgresql  redis  websockets  docker  github-actions' },
-]
 
 const terminalLine = {
   hidden: { opacity: 0, x: -8 },
@@ -75,47 +67,34 @@ export function About() {
                 <span />
                 <p className="mono">~/tejas</p>
               </div>
-              <m.div
-                className="terminal__body mono"
-                variants={staggerChildren(0.22, 0.2)}
-                initial="hidden"
-                whileInView="visible"
-                viewport={revealViewport}
-              >
-                {terminal.map((line) => (
-                  <m.div key={line.cmd} variants={terminalLine} className="terminal__entry">
-                    <p>
-                      <span className="terminal__prompt" aria-hidden="true">
-                        $
-                      </span>{' '}
-                      {line.cmd}
-                    </p>
-                    <p className="terminal__out">{line.out}</p>
-                  </m.div>
-                ))}
-                <m.p variants={terminalLine} aria-hidden="true">
+              <div className="terminal__body mono">
+                <p className="terminal__command">
+                  <span className="terminal__prompt" aria-hidden="true">
+                    $
+                  </span>{' '}
+                  tejas --at-a-glance
+                </p>
+                <m.dl
+                  className="glance"
+                  variants={staggerChildren(0.12, 0.2)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={revealViewport}
+                >
+                  {atAGlance.map((row) => (
+                    <m.div key={row.key} variants={terminalLine} className="glance__row">
+                      <dt>{row.key}</dt>
+                      <dd>{row.value}</dd>
+                    </m.div>
+                  ))}
+                </m.dl>
+                <p aria-hidden="true">
                   <span className="terminal__prompt">$</span> <span className="terminal__caret" />
-                </m.p>
-              </m.div>
+                </p>
+              </div>
             </TiltCard>
           </Reveal>
         </div>
-
-        <m.ul
-          className="about__stats"
-          variants={staggerChildren(0.12)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={revealViewport}
-        >
-          {stats.map((s) => (
-            <m.li key={s.label} variants={fadeUp} className="stat glass">
-              <Counter value={s.value} className="stat__value gradient-text" />
-              <p className="stat__label">{s.label}</p>
-              <p className="stat__context">{s.context}</p>
-            </m.li>
-          ))}
-        </m.ul>
       </div>
     </section>
   )
