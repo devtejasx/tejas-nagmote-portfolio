@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { openSourceProjects, totalMergedPullRequests } from './openSource'
+import { education } from './education'
 import { links, stats } from './profile'
 import { projects } from './projects'
 import { skillCategories } from './skills'
@@ -64,9 +65,17 @@ describe('links and skills', () => {
   it('uses https or mailto links only', () => {
     for (const l of links) expect(l.href).toMatch(/^(https:\/\/|mailto:)/)
     for (const p of projects) expect(p.repo).toMatch(/^https:\/\/github\.com\/devtejasx\//)
+    for (const p of projects) if (p.live) expect(p.live).toMatch(/^https:\/\//)
   })
 
   it('has no duplicate skills inside a category', () => {
     for (const c of skillCategories) expect(new Set(c.skills).size).toBe(c.skills.length)
+  })
+})
+
+describe('education', () => {
+  it('lists university, HSC and ICSE, newest first', () => {
+    expect(education.map((e) => e.end)).toEqual([2027, 2023, 2020])
+    expect(education[0].institution).toBe('PES University')
   })
 })

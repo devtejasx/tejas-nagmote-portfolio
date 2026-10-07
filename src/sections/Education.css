@@ -45,6 +45,15 @@
   border-radius: var(--radius-lg);
 }
 
+.edu-card--compact {
+  gap: 4px;
+  padding-block: clamp(20px, 3vw, 28px);
+}
+
+.edu-card--compact .edu-card__school {
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+}
+
 .edu-card__years {
   color: var(--blue);
   font-size: 14px;

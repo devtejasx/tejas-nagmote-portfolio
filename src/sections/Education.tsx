@@ -1,10 +1,25 @@
-import { GraduationCap } from 'lucide-react'
+import { GraduationCap, School } from 'lucide-react'
 import { Badges } from '../components/Badges'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { TiltCard } from '../components/TiltCard'
-import { education } from '../data/education'
+import { education, type EducationEntry } from '../data/education'
 import './Education.css'
+
+function Years({ start, end }: Pick<EducationEntry, 'start' | 'end'>) {
+  return (
+    <p className="edu-card__years mono">
+      {start !== undefined && (
+        <>
+          <time dateTime={String(start)}>{start}</time>
+          <span aria-hidden="true"> — </span>
+          <span className="sr-only"> to </span>
+        </>
+      )}
+      <time dateTime={String(end)}>{end}</time>
+    </p>
+  )
+}
 
 export function Education() {
   return (
@@ -18,30 +33,36 @@ export function Education() {
         />
 
         <ol className="timeline">
-          <Reveal as="li" className="timeline__item">
-            <span className="timeline__marker" aria-hidden="true">
-              <GraduationCap size={20} strokeWidth={1.8} />
-            </span>
-            <TiltCard className="edu-card glass" maxTilt={3}>
-              <p className="edu-card__years mono">
-                <time dateTime={String(education.start)}>{education.start}</time>
-                <span aria-hidden="true"> — </span>
-                <span className="sr-only"> to </span>
-                <time dateTime={String(education.end)}>{education.end}</time>
-              </p>
-              <h3 className="edu-card__school">{education.institution}</h3>
-              <p className="edu-card__place">{education.city}, India</p>
-              <p className="edu-card__degree">{education.degree}</p>
-              <div className="edu-card__coursework">
-                <h4 className="edu-card__label mono">Relevant coursework</h4>
-                <Badges
-                  items={education.coursework}
-                  label="Relevant coursework"
-                  variant="feature"
-                />
-              </div>
-            </TiltCard>
-          </Reveal>
+          {education.map((entry, i) => {
+            const primary = i === 0
+            const Icon = primary ? GraduationCap : School
+            return (
+              <Reveal key={entry.institution} as="li" className="timeline__item" delay={i * 0.08}>
+                <span className="timeline__marker" aria-hidden="true">
+                  <Icon size={20} strokeWidth={1.8} />
+                </span>
+                <TiltCard
+                  className={`edu-card glass${primary ? '' : ' edu-card--compact'}`}
+                  maxTilt={3}
+                >
+                  <Years start={entry.start} end={entry.end} />
+                  <h3 className="edu-card__school">{entry.institution}</h3>
+                  {entry.place && <p className="edu-card__place">{entry.place}</p>}
+                  <p className="edu-card__degree">{entry.credential}</p>
+                  {entry.coursework && (
+                    <div className="edu-card__coursework">
+                      <h4 className="edu-card__label mono">Relevant coursework</h4>
+                      <Badges
+                        items={entry.coursework}
+                        label="Relevant coursework"
+                        variant="feature"
+                      />
+                    </div>
+                  )}
+                </TiltCard>
+              </Reveal>
+            )
+          })}
         </ol>
       </div>
     </section>

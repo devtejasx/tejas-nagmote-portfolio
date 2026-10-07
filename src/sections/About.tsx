@@ -5,7 +5,7 @@ import { Counter } from '../components/Counter'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { TiltCard } from '../components/TiltCard'
-import { education } from '../data/education'
+import { university } from '../data/education'
 import { profile, stats } from '../data/profile'
 import './About.css'
 
@@ -55,7 +55,7 @@ export function About() {
                   <GraduationCap size={16} aria-hidden="true" /> Studying
                 </dt>
                 <dd>
-                  B.Tech CSE, {education.institution} ({education.start}–{education.end})
+                  B.Tech CSE, {university.institution} ({university.start}–{university.end})
                 </dd>
               </div>
               <div>
