@@ -118,9 +118,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding-block: 24px max(28px, env(safe-area-inset-bottom));
-  background: rgb(5 6 10 / 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--bg);
   overflow-y: auto;
 }
 
