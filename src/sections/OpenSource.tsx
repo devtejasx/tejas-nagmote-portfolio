@@ -1,8 +1,10 @@
+import { useRef, useState } from 'react'
 import { m } from 'motion/react'
-import { ArrowUpRight, GitPullRequest } from 'lucide-react'
-import { fadeUp, revealViewport, staggerChildren } from '../animations/variants'
+import { ArrowUpRight, GitPullRequest, SearchCode } from 'lucide-react'
+import { revealViewport, staggerChildren } from '../animations/variants'
 import { Counter } from '../components/Counter'
-import { PullRequestList } from '../components/PullRequestList'
+import { ContributionGraph, type MergeEvent } from '../components/oss/ContributionGraph'
+import { PrExplorer } from '../components/oss/PrExplorer'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { TiltCard } from '../components/TiltCard'
@@ -13,51 +15,11 @@ import {
   totalMergedPullRequests,
   type OpenSourceProject,
 } from '../data/openSource'
+import { prMatches, type KindFilter } from '../data/prDetails'
 import './OpenSource.css'
 
 const featured = openSourceProjects.filter((p) => p.featured)
-const others = openSourceProjects.filter((p) => !p.featured)
 const maxCount = Math.max(...openSourceProjects.map((p) => p.pullRequests.length))
-
-/* Every merge date, for the timeline strip. */
-const allMerges = openSourceProjects
-  .flatMap((p) => p.pullRequests.map((pr) => ({ ...pr, project: p.name })))
-  .sort((a, b) => a.mergedAt.localeCompare(b.mergedAt))
-const DAY = 86_400_000
-const firstDay = Date.parse(allMerges[0].mergedAt)
-const lastDay = Date.parse(allMerges[allMerges.length - 1].mergedAt)
-const span = Math.max(lastDay - firstDay, DAY)
-const formatDay = (iso: string) =>
-  new Date(`${iso}T00:00:00Z`).toLocaleDateString('en', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    timeZone: 'UTC',
-  })
-
-function timelineDots() {
-  const perDay = new Map<string, number>()
-  return allMerges.map((m) => {
-    const stack = perDay.get(m.mergedAt) ?? 0
-    perDay.set(m.mergedAt, stack + 1)
-    return { ...m, x: ((Date.parse(m.mergedAt) - firstDay) / span) * 100, stack }
-  })
-}
-
-function monthTicks() {
-  const ticks: { label: string; x: number }[] = []
-  const d = new Date(firstDay)
-  d.setUTCDate(1)
-  d.setUTCMonth(d.getUTCMonth() + 1)
-  while (d.getTime() <= lastDay) {
-    ticks.push({
-      label: d.toLocaleString('en', { month: 'short', timeZone: 'UTC' }),
-      x: ((d.getTime() - firstDay) / span) * 100,
-    })
-    d.setUTCMonth(d.getUTCMonth() + 1)
-  }
-  return ticks
-}
 
 function Distribution() {
   return (
@@ -89,48 +51,20 @@ function Distribution() {
   )
 }
 
-function Timeline() {
-  const dots = timelineDots()
+function RepoHeader({ project }: { project: OpenSourceProject }) {
   return (
-    <figure className="oss-timeline">
-      <figcaption className="oss-timeline__caption mono">
-        Merge dates · {formatDay(allMerges[0].mergedAt)} →{' '}
-        {formatDay(allMerges[allMerges.length - 1].mergedAt)}
-      </figcaption>
-      <div className="oss-timeline__track" aria-hidden="true">
-        {monthTicks().map((t) => (
-          <span key={t.label} className="oss-timeline__tick mono" style={{ left: `${t.x}%` }}>
-            {t.label}
-          </span>
-        ))}
-        {dots.map((d) => (
-          <span
-            key={`${d.project}-${d.number}`}
-            className="oss-timeline__dot"
-            style={{ left: `${d.x}%`, bottom: `${10 + d.stack * 12}px` }}
-            data-tip={`${d.project} #${d.number}`}
-          />
-        ))}
-      </div>
-    </figure>
-  )
-}
-
-function RepoHeader({ project, size }: { project: OpenSourceProject; size: 'lg' | 'sm' }) {
-  const count = project.pullRequests.length
-  return (
-    <div className={`repo-card__header repo-card__header--${size}`}>
+    <div className="repo-card__header">
       <div className="repo-card__title-row">
         <h3 className="repo-card__name">
           <a href={repoUrl(project.repo)} target="_blank" rel="noopener noreferrer">
             {project.name}
-            <ArrowUpRight size={size === 'lg' ? 20 : 16} aria-hidden="true" />
+            <ArrowUpRight size={20} aria-hidden="true" />
             <span className="sr-only"> repository (opens in a new tab)</span>
           </a>
         </h3>
         <span className="repo-card__count">
           <GitPullRequest size={14} aria-hidden="true" />
-          {count} merged
+          {project.pullRequests.length} merged
         </span>
       </div>
       <p className="repo-card__repo mono">{project.repo}</p>
@@ -147,44 +81,98 @@ function RepoHeader({ project, size }: { project: OpenSourceProject; size: 'lg' 
   )
 }
 
-function FeaturedCard({ project }: { project: OpenSourceProject }) {
+function FeaturedCard({
+  project,
+  onInspect,
+}: {
+  project: OpenSourceProject
+  onInspect: (repo: string, pr: number) => void
+}) {
   return (
     <TiltCard as="article" className="repo-card repo-card--featured glass" maxTilt={3}>
-      <RepoHeader project={project} size="lg" />
+      <RepoHeader project={project} />
       <p className="repo-card__about">{project.about}</p>
       <ul className="repo-card__highlights">
         {project.highlights.map((h) => (
           <li key={h.pullRequest}>
             <p>{h.text}</p>
-            <a
-              href={pullUrl(project.repo, h.pullRequest)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-link mono"
-            >
-              PR #{h.pullRequest}
-              <ArrowUpRight size={14} aria-hidden="true" />
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            <div className="repo-card__highlight-actions">
+              <button
+                type="button"
+                className="repo-card__inspect"
+                onClick={() => onInspect(project.repo, h.pullRequest)}
+              >
+                <SearchCode size={15} aria-hidden="true" />
+                Problem → fix
+              </button>
+              <a
+                href={pullUrl(project.repo, h.pullRequest)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link mono"
+              >
+                PR #{h.pullRequest}
+                <ArrowUpRight size={14} aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
           </li>
         ))}
       </ul>
-      <PullRequestList repo={project.repo} pullRequests={project.pullRequests} />
-    </TiltCard>
-  )
-}
-
-function CompactCard({ project }: { project: OpenSourceProject }) {
-  return (
-    <TiltCard as="article" className="repo-card glass" maxTilt={4}>
-      <RepoHeader project={project} size="sm" />
-      <p className="repo-card__about">{project.about}</p>
-      <PullRequestList repo={project.repo} pullRequests={project.pullRequests} collapseAfter={1} />
     </TiltCard>
   )
 }
 
 export function OpenSource() {
+  const [repo, setRepo] = useState('ng-log/ng-log')
+  const [pr, setPr] = useState(37)
+  const [filter, setFilter] = useState<KindFilter>('All')
+  const explorer = useRef<HTMLDivElement>(null)
+
+  const projectFor = (r: string) => openSourceProjects.find((p) => p.repo === r)
+  const selectedDate = projectFor(repo)?.pullRequests.find((x) => x.number === pr)?.mergedAt
+
+  const select = (r: string, n: number, reveal = false) => {
+    setRepo(r)
+    setPr(n)
+    if (!prMatches(r, n, filter)) setFilter('All')
+    if (reveal) {
+      explorer.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      explorer.current?.focus({ preventScroll: true })
+    }
+  }
+
+  const selectRepo = (r: string) => {
+    const first = [...(projectFor(r)?.pullRequests ?? [])]
+      .filter((x) => prMatches(r, x.number, filter))
+      .sort((a, b) => b.mergedAt.localeCompare(a.mergedAt))[0]
+    setRepo(r)
+    if (first) setPr(first.number)
+  }
+
+  const applyFilter = (k: KindFilter) => {
+    setFilter(k)
+    const inRepo = projectFor(repo)?.pullRequests.some((x) => prMatches(repo, x.number, k))
+    if (inRepo) {
+      const keep = prMatches(repo, pr, k)
+      if (!keep) selectRepo(repo)
+      return
+    }
+    const next = openSourceProjects.find((p) =>
+      p.pullRequests.some((x) => prMatches(p.repo, x.number, k)),
+    )
+    if (next) {
+      const first = next.pullRequests.find((x) => prMatches(next.repo, x.number, k))
+      setRepo(next.repo)
+      if (first) setPr(first.number)
+    }
+  }
+
+  const selectDay = (events: MergeEvent[]) => {
+    const first = events[0]
+    if (first) select(first.repo, first.number, true)
+  }
+
   return (
     <section id="open-source" className="section oss" aria-labelledby="oss-title">
       <div className="oss__glow" aria-hidden="true" />
@@ -196,8 +184,11 @@ export function OpenSource() {
           title="Open Source Engineering"
         >
           <p>
-            Pull requests to upstream projects maintained by external organizations, fixing
-            concurrency, memory-safety, and correctness bugs through maintainer code review.
+            <strong className="oss__claim">
+              29 merged pull requests across 7 upstream open-source projects
+            </strong>{' '}
+            maintained by external organizations, fixing concurrency, memory-safety and correctness
+            bugs through maintainer code review. 23 of the 29 are in C++ codebases.
           </p>
         </SectionHeading>
 
@@ -215,34 +206,36 @@ export function OpenSource() {
             </div>
           </div>
           <Distribution />
-          <Timeline />
+          <ContributionGraph
+            projects={openSourceProjects}
+            selectedDate={selectedDate}
+            onSelectDay={selectDay}
+          />
         </Reveal>
 
         <div className="oss__featured">
           {featured.map((p, i) => (
             <Reveal key={p.repo} delay={i * 0.1} className="oss__cell">
-              <FeaturedCard project={p} />
+              <FeaturedCard project={p} onInspect={(r, n) => select(r, n, true)} />
             </Reveal>
           ))}
         </div>
 
-        <m.div
-          className="oss__others"
-          variants={staggerChildren(0.08)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          {others.map((p) => (
-            <m.div key={p.repo} variants={fadeUp} className="oss__cell">
-              <CompactCard project={p} />
-            </m.div>
-          ))}
-        </m.div>
-
-        <p className="oss__footnote">
-          Every pull request listed here links to the merged PR on GitHub.
-        </p>
+        <Reveal className="oss__explorer">
+          <h3 className="oss__explorer-title">
+            Every merged PR: <span className="gradient-text">project → PR → problem → fix</span>
+          </h3>
+          <PrExplorer
+            ref={explorer}
+            projects={openSourceProjects}
+            repo={repo}
+            pr={pr}
+            filter={filter}
+            onSelectRepo={selectRepo}
+            onSelectPr={setPr}
+            onFilter={applyFilter}
+          />
+        </Reveal>
       </div>
     </section>
   )

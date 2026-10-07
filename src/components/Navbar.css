@@ -10,7 +10,7 @@
 }
 
 .nav--solid {
-  background: rgb(5 6 10 / 0.72);
+  background: rgb(5 6 10 / 0.9);
   border-bottom-color: var(--border);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);

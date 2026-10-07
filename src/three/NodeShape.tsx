@@ -5,10 +5,10 @@ import {
   OctahedronGeometry,
   type BufferGeometry,
 } from 'three'
-import type { SceneNodeId } from './layout'
+import type { NodeKind } from './layout'
 
 interface ShapeProps {
-  kind: SceneNodeId
+  kind: NodeKind
   color: string
   hovered: boolean
 }
@@ -106,6 +106,23 @@ export function NodeShape({ kind, color, hovered }: ShapeProps) {
                 position={[0, y, 0]}
               />
               <Led position={[0.38, y, 0.32]} color={y === 0 ? '#5fe3a1' : '#9cc0ff'} />
+            </group>
+          ))}
+        </group>
+      )
+    case 'replica':
+      // A smaller, two-blade server: the same service, running elsewhere.
+      return (
+        <group scale={0.82}>
+          {[0.14, -0.14].map((y) => (
+            <group key={y}>
+              <Body
+                geometry={geometries.slab}
+                color={color}
+                hovered={hovered}
+                position={[0, y, 0]}
+              />
+              <Led position={[0.38, y, 0.32]} color="#5fe3a1" />
             </group>
           ))}
         </group>

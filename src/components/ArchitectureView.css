@@ -1,0 +1,95 @@
+.arch3d {
+  position: relative;
+  display: grid;
+  gap: 14px;
+}
+
+.arch3d__toggle {
+  justify-self: end;
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgb(0 0 0 / 0.3);
+}
+
+.arch3d__toggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.arch3d__toggle button[aria-pressed='true'] {
+  color: #fff;
+  background: rgb(91 140 255 / 0.2);
+}
+
+.arch3d__stage {
+  position: relative;
+  height: clamp(340px, 42vw, 460px);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse at 50% 40%, rgb(91 140 255 / 0.1), transparent 65%), rgb(3 4 8 / 0.6);
+  overflow: hidden;
+}
+
+.arch3d__canvas {
+  animation: canvas-in 1s var(--ease-out) both;
+}
+
+.arch3d__hint {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  color: var(--text-dim);
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.arch3d__band {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgb(157 107 255 / 0.35);
+  background: rgb(157 107 255 / 0.06);
+  color: #cbb6ff;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------ loader */
+.scene-loader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.scene-loader__ring {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgb(91 140 255 / 0.2);
+  border-top-color: var(--blue);
+  animation: spin 0.9s linear infinite;
+}
+
+.scene-loader__text {
+  font-size: 12px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -170,6 +170,10 @@
 }
 
 .hero-fallback__node text {
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 4px;
+  stroke-linejoin: round;
   fill: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 11px;

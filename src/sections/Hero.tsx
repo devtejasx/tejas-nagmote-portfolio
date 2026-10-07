@@ -104,7 +104,8 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 1 }}
       >
-        client <span>→</span> api <span>→</span> service <span>→</span> redis · postgresql
+        client <span>→</span> api <span>→</span> service <span>→</span> postgresql · redis{' '}
+        <span>→</span> replicas
       </m.p>
 
       <a href="#impact" className="hero__scroll">
