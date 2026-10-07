@@ -10,8 +10,9 @@ focused on C++ systems and backend engineering.
 The hero is a small React Three Fiber scene of the path a request takes through a backend —
 client → API → service → Redis / PostgreSQL — with animated links, travelling packets and pointer
 parallax. The rest of the site covers open-source work, projects (each with an interactive
-architecture diagram), skills, education and contact details. All content comes from the
-resume in [`public/resume.pdf`](public/resume.pdf).
+architecture diagram), skills, education and contact details. Content comes from the resume
+in [`public/resume.pdf`](public/resume.pdf); the CodeCompass and ARISE project cards come from
+those repositories' own READMEs, and the school entries under Education were added separately.
 
 ## Features
 

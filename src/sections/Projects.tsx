@@ -1,6 +1,6 @@
 import { useId, useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
+import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import { ArchitectureDiagram } from '../components/ArchitectureDiagram'
 import { Badges } from '../components/Badges'
 import { GitHubIcon } from '../components/BrandIcon'
@@ -45,6 +45,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <ButtonLink href={project.repo} external variant="ghost" icon={<GitHubIcon size={18} />}>
             Source
           </ButtonLink>
+          {project.live && (
+            <ButtonLink
+              href={project.live}
+              external
+              variant="ghost"
+              icon={<ArrowUpRight size={18} aria-hidden="true" />}
+            >
+              Live demo
+            </ButtonLink>
+          )}
         </div>
 
         <AnimatePresence initial={false}>
@@ -94,8 +104,8 @@ export function Projects() {
           title="Things I've built."
         >
           <p>
-            Backends and infrastructure, each shown with the architecture behind it. Hover or tap a
-            component to see what it does.
+            Backends, platforms and full-stack apps, each shown with the architecture behind it.
+            Hover or tap a component to see what it does.
           </p>
         </SectionHeading>
 
