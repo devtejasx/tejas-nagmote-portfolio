@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState, type RefObject } from 'react'
 import { ErrorBoundary } from '../components/ErrorBoundary'
 import { HeroFallback } from '../components/HeroFallback'
+import { SceneLoader } from '../components/SceneLoader'
 import { useIdle } from '../hooks/useIdle'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
 import { getRenderProfile } from '../utils/device'
@@ -55,7 +56,7 @@ export function HeroVisual({ eventSource }: HeroVisualProps) {
   return (
     <div ref={ref} className="hero-visual">
       <ErrorBoundary name="hero-scene" fallback={<HeroFallback />}>
-        <Suspense fallback={null}>
+        <Suspense fallback={<SceneLoader label="Starting 3D scene" />}>
           {idle && (
             <Scene
               frameloop={frameloop}

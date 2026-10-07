@@ -40,6 +40,16 @@ export default defineConfig(({ mode }) => {
       target: 'es2022',
       // three.js is lazy-loaded into its own chunk; it is legitimately large.
       chunkSizeWarningLimit: 1000,
+      rolldownOptions: {
+        output: {
+          // Name the lazily loaded 3D vendor chunk after what is in it. This
+          // only renames the file; it does not change how modules are grouped.
+          chunkFileNames: (chunk) =>
+            chunk.moduleIds.some((id) => /node_modules[\\/]three[\\/]/.test(id))
+              ? 'assets/three-[hash].js'
+              : 'assets/[name]-[hash].js',
+        },
+      },
     },
     test: {
       environment: 'node',

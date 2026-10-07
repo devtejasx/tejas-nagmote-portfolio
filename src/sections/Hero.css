@@ -383,3 +383,16 @@
     font-size: 11px;
   }
 }
+
+/* The hero's loader sits where the graph will appear: right of the copy on
+   wide screens, above it on phones. */
+.hero-visual .scene-loader {
+  inset: 0 0 0 50%;
+}
+
+@media (max-width: 899px) {
+  .hero-visual .scene-loader {
+    inset: var(--nav-height) 0 auto;
+    height: 36vh;
+  }
+}
