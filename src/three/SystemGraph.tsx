@@ -166,8 +166,9 @@ function CodeTags({ reduced }: { reduced: boolean }) {
 function useLayout() {
   const { width, height } = useThree((s) => s.size)
   const aspect = width / Math.max(height, 1)
-  if (aspect < 0.9) return { x: 0.06, y: 1.6, scale: 0.44 }
-  if (aspect < 1.45) return { x: 1.55, y: 0.25, scale: 0.7 }
+  // Portrait: shrink with the aspect ratio so the whole graph always fits the width.
+  if (aspect < 0.9) return { x: 0.06, y: 1.6, scale: Math.min(0.5, aspect * 0.9) }
+  if (aspect < 1.45) return { x: 2.0, y: 0.2, scale: 0.62 }
   return { x: 2.05, y: 0.1, scale: 0.86 }
 }
 

@@ -28,9 +28,8 @@ export const sceneEdges: [SceneNodeId, SceneNodeId][] = [
 /** Decorative code fragments floating around the graph (group-local positions). */
 export const codeTags: { id: string; text: string; position: [number, number, number] }[] = [
   { id: 'tag-lock', text: 'std::scoped_lock', position: [-3.3, 2.15, -1.2] },
-  { id: 'tag-ws', text: '101 Switching Protocols', position: [-2.5, -1.55, 0.4] },
+  { id: 'tag-ws', text: '101 Switching Protocols', position: [-0.3, -1.95, 0.4] },
   { id: 'tag-pub', text: 'PUBLISH', position: [3.15, 2.55, -1.6] },
-  { id: 'tag-sql', text: 'INSERT … RETURNING', position: [3.2, -2.15, -0.6] },
   { id: 'tag-trace', text: 'traceparent: 00-…', position: [0.6, 2.75, -2.2] },
 ]
 

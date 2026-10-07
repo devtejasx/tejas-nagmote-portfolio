@@ -34,7 +34,12 @@
 .hero-visual,
 .hero-fallback {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto;
+  height: 100%;
+  /* Never taller than one screen, so the scene keeps its framing when the
+     copy makes the hero taller than the viewport (small phones). */
+  max-height: 100vh;
+  max-height: 100svh;
   z-index: -1;
 }
 
@@ -160,7 +165,7 @@
 }
 
 .hero-fallback__node rect {
-  fill: rgb(11 16 32 / 0.85);
+  fill: #0b1020;
   stroke-width: 1.5;
 }
 
@@ -338,14 +343,13 @@
   }
 }
 
-@media (max-width: 899px) and (max-height: 640px) {
-  .hero {
-    padding-top: calc(var(--nav-height) + 24vh);
-  }
-}
-
 @media (max-width: 380px) {
   .hero__actions .btn {
     flex: 1 1 100%;
+  }
+
+  .hero__eyebrow {
+    padding-inline: 12px;
+    font-size: 11px;
   }
 }

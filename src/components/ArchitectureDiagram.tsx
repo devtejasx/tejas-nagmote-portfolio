@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Diagram, DiagramNode } from '../data/projects'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import './ArchitectureDiagram.css'
@@ -170,7 +170,7 @@ export function ArchitectureDiagram({ diagram }: ArchitectureDiagramProps) {
         </div>
         <div id={detailId} className="arch__detail" aria-live="polite">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.p
+            <m.p
               key={current.id}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -178,7 +178,7 @@ export function ArchitectureDiagram({ diagram }: ArchitectureDiagramProps) {
               transition={{ duration: 0.2 }}
             >
               <strong>{current.label}.</strong> {current.detail}
-            </motion.p>
+            </m.p>
           </AnimatePresence>
         </div>
       </figcaption>
