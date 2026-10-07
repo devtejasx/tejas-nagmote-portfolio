@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import { MotionConfig } from 'motion/react'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { About } from './sections/About'
+import { Contact } from './sections/Contact'
+import { Education } from './sections/Education'
 import { Hero } from './sections/Hero'
 import { OpenSource } from './sections/OpenSource'
 import { Projects } from './sections/Projects'
@@ -45,6 +47,12 @@ export default function App() {
         </Guard>
         <Guard name="projects">
           <Projects />
+        </Guard>
+        <Guard name="education">
+          <Education />
+        </Guard>
+        <Guard name="contact">
+          <Contact />
         </Guard>
       </main>
     </MotionConfig>
