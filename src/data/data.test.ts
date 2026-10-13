@@ -7,24 +7,25 @@ import { projects } from './projects'
 import { skillCategories, skillEvidence } from './skills'
 import { timeline } from './timeline'
 
-describe('open-source data matches the resume', () => {
-  it('counts 29 merged PRs across 7 projects', () => {
-    expect(totalMergedPullRequests).toBe(29)
-    expect(openSourceProjects).toHaveLength(7)
+describe('open-source data matches GitHub', () => {
+  it('counts 37 merged PRs across 8 projects', () => {
+    expect(totalMergedPullRequests).toBe(37)
+    expect(openSourceProjects).toHaveLength(8)
   })
 
-  it('keeps the per-project counts stated on the resume', () => {
+  it('keeps the per-project merged counts', () => {
     const counts = Object.fromEntries(
       openSourceProjects.map((p) => [p.name, p.pullRequests.length]),
     )
     expect(counts).toEqual({
       'ng-log': 12,
       'google/benchmark': 6,
-      D2MOO: 5,
-      'grafana-pathfinder-app': 3,
+      D2MOO: 8,
+      'grafana-pathfinder-app': 5,
+      Kornia: 2,
       coverport: 1,
       MicroPython: 1,
-      PySTAC: 1,
+      PySTAC: 2,
     })
   })
 
@@ -103,7 +104,7 @@ describe('impact stats', () => {
   })
 
   it('shows exactly the five resume figures', () => {
-    expect(stats.map((s) => s.value)).toEqual([29, 7, 413, 12, 6])
+    expect(stats.map((s) => s.value)).toEqual([37, 8, 413, 12, 6])
   })
 })
 
@@ -111,7 +112,7 @@ describe('skill evidence', () => {
   const known = new Set([
     ...projects.map((p) => p.title),
     ...openSourceProjects.map((p) => p.name),
-    '29 merged open-source PRs',
+    '37 merged open-source PRs',
   ])
 
   it('only points at real projects and repositories', () => {

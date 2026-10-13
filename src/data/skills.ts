@@ -110,6 +110,6 @@ export const skillEvidence: Record<string, string[]> = {
   'GitHub Actions': [CHAT, DEPLOYX, API_SUITE],
   GoogleTest: [CHAT],
   Postman: [API_SUITE],
-  Git: ['29 merged open-source PRs'],
-  GitHub: ['29 merged open-source PRs'],
+  Git: ['37 merged open-source PRs'],
+  GitHub: ['37 merged open-source PRs'],
 }

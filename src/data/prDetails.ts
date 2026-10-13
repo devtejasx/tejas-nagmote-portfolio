@@ -8,6 +8,7 @@ export type PrKind =
   | 'Correctness'
   | 'Build & CI'
   | 'Testing'
+  | 'Feature'
   | 'Docs'
 
 export interface PrDetail {
@@ -157,6 +158,24 @@ export const prDetails: Record<string, PrDetail> = {
       'ACT1Q4_SetMonolithOrder advanced its counter on every roll, so a collision left a monolith without a class.',
     fix: 'Advance only when a stone is placed, matching the original loop.',
   },
+  'ThePhrozenKeep/D2MOO#237': {
+    kind: 'Correctness',
+    problem:
+      'Offset 0x20 of D2GameStrc was typed as a bare uint32_t, although every callback that touches it takes a D2ClientInfoStrc** — one of them was declared with the wrong pointer type.',
+    fix: 'Type the slot as D2ClientInfoStrc*, align the odd callback with its four siblings and rename the creator to FnCreateClientInfo. The 32-bit layout is unchanged.',
+  },
+  'ThePhrozenKeep/D2MOO#239': {
+    kind: 'Correctness',
+    problem:
+      'Both item ids in the “put a scroll into a book” packet come from the client; on a scroll/book mismatch the server asserted and called exit(-1), so one bad packet took the whole game server down.',
+    fix: 'Reject the mismatch like the function’s other invalid-input cases, returning an error to the packet handler. The original behaviour stays behind NO_BUG_FIX.',
+  },
+  'ThePhrozenKeep/D2MOO#240': {
+    kind: 'Memory safety',
+    problem:
+      'The debugger’s UTF-8 name buffer was sized at exactly 3 bytes per character: one-character names came back empty, CJK names lost their last character, and an empty string wrote a terminator through a null pointer. The unit spawner also had no way to pick a row by id.',
+    fix: 'Give the buffer 3 spare bytes so it is never empty, and add “<id>: <name>” labels plus a clamped id input to the monster spawners.',
+  },
 
   // grafana-pathfinder-app
   'grafana/grafana-pathfinder-app#1687': {
@@ -177,6 +196,18 @@ export const prDetails: Record<string, PrDetail> = {
       'Block-editor saves were stamped with schema version 1.0 while the editor emits 1.1.0.',
     fix: 'Fall back to the editor’s current schema version constant.',
   },
+  'grafana/grafana-pathfinder-app#1995': {
+    kind: 'Testing',
+    problem:
+      'Three minimizedSidebar test ids were left behind after the component that used them was deleted.',
+    fix: 'Remove the dead constants after confirming nothing on main still references them.',
+  },
+  'grafana/grafana-pathfinder-app#2054': {
+    kind: 'Correctness',
+    problem:
+      'Path progress filtered each candidate storage key on its own, so a long bundled id kept one key shape and lost the other; a record stored under the dropped shape was never found and scored 0%, dragging down the path’s average.',
+    fix: 'Make the check all-or-nothing: a member whose keys would be rewritten resolves as unresolved and is left out of the mean, with tests through both the id and url branches.',
+  },
 
   // coverport, MicroPython, PySTAC
   'konflux-ci/coverport#113': {
@@ -195,6 +226,25 @@ export const prDetails: Record<string, PrDetail> = {
     problem:
       '_set_property converted only top-level list items, so more deeply nested objects broke JSON serialization.',
     fix: 'Convert every stored value recursively, with a regression test.',
+  },
+  'stac-utils/pystac#1805': {
+    kind: 'Feature',
+    problem:
+      'application/octet-stream and application/zip show up often in asset and link metadata, but MediaType had no constants for them, so users wrote the strings by hand.',
+    fix: 'Add MediaType.OCTET_STREAM and MediaType.ZIP, with a test that an asset built with ZIP serializes to "application/zip".',
+  },
+  // kornia
+  'kornia/kornia#4839': {
+    kind: 'Correctness',
+    problem:
+      'PlanckianJitter truncates a Uniform(0, N) draw to a table index. In float16/bfloat16 on MPS, torch.rand can return exactly 1.0, which truncates to N, one past the end, so RandomPlanckianJitter intermittently raised an out-of-bounds error.',
+    fix: 'Draw the index in float32 whenever the augmentation runs in half precision; float32/float64 draws are unchanged.',
+  },
+  'kornia/kornia#5473': {
+    kind: 'Correctness',
+    problem:
+      'A shape-changing augmentation such as RandomCrop given a batch_prob mixing applied and skipped rows silently transformed every row, so skipped rows’ labels stopped matching their pixels and inverse() failed with a shape mismatch.',
+    fix: 'Raise a ValueError on that path in forward, inverse and the augmentation audit, keeping whole-batch gates and shape-preserving augmentations unchanged. A deliberate breaking change, with tests in float32 and float64.',
   },
 }
 

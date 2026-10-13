@@ -1,6 +1,6 @@
-// Generated from `gh search prs --author devtejasx --merged`, limited to the
-// 29 PRs merged on or before 2026-09-21 that the resume counts. Every number
-// below resolves to https://github.com/<repo>/pull/<number>.
+// Generated from `gh search prs --author devtejasx --merged`: every PR merged
+// into an external repository as of 2026-10-13 (own repos and coursework are
+// left out). Every number below resolves to https://github.com/<repo>/pull/<number>.
 
 export interface MergedPullRequest {
   number: number
@@ -122,6 +122,21 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
       title: 'Fix ACT1Q4_SetMonolithOrder skipping a monolith on a collision',
       mergedAt: '2026-09-15',
     },
+    {
+      number: 237,
+      title: "Type the game's 0x20 slot as D2ClientInfoStrc*",
+      mergedAt: '2026-10-12',
+    },
+    {
+      number: 239,
+      title: 'Reject a mismatched scroll instead of exiting in sub_6FC49AE0',
+      mergedAt: '2026-10-12',
+    },
+    {
+      number: 240,
+      title: 'Debugger: spawn monsters by id, and fix truncated UTF-8 names',
+      mergedAt: '2026-10-13',
+    },
   ],
   'grafana/grafana-pathfinder-app': [
     {
@@ -138,6 +153,12 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
       number: 1686,
       title: 'fix(block-editor): stamp saves with the schema version the editor emits',
       mergedAt: '2026-08-27',
+    },
+    { number: 1995, title: 'chore: remove dead minimizedSidebar test ids', mergedAt: '2026-09-24' },
+    {
+      number: 2054,
+      title: 'fix: exclude a path member when any candidate key fails normalization',
+      mergedAt: '2026-10-05',
     },
   ],
   'konflux-ci/coverport': [
@@ -159,6 +180,19 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
       number: 1804,
       title: 'fix: recursively convert values in PropertiesExtension._set_property',
       mergedAt: '2026-09-11',
+    },
+    { number: 1805, title: 'feat: add octet-stream and zip media types', mergedAt: '2026-10-01' },
+  ],
+  'kornia/kornia': [
+    {
+      number: 4839,
+      title: 'fix(augmentation): keep the PlanckianJitter index sampler in float32',
+      mergedAt: '2026-09-25',
+    },
+    {
+      number: 5473,
+      title: 'fix(augmentation)!: reject a mixed gate on shape-changing augmentations',
+      mergedAt: '2026-10-06',
     },
   ],
 }

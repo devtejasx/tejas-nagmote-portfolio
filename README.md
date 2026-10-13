@@ -9,7 +9,7 @@ undergraduate at PES University.
 
 The site is built to answer five questions in the first screens: who Tejas is (a C++ systems
 and backend engineer), what he builds (backend and distributed systems), what sets him apart
-(29 merged pull requests across 7 external open-source projects), his best project (a real-time
+(37 merged pull requests across 8 external open-source projects), his best project (a real-time
 C++ chat server) and what he is building now (DeployX). The 3D visuals are diagrams of that
 work rather than decoration: the hero is the chat server's message path, ending in Redis fanning
 events out to other replicas.
@@ -23,7 +23,7 @@ ARISE cards from those repositories' READMEs.
 | Section            | What it shows                                                                                               |
 | ------------------ | ----------------------------------------------------------------------------------------------------------- |
 | Hero               | Role, one-line pitch, roles of interest, and a 3D distributed-system scene                                  |
-| Impact             | 29 merged PRs · 7 projects · 413 GoogleTest tests · 12 ng-log PRs · 6 google/benchmark PRs                  |
+| Impact             | 37 merged PRs · 8 projects · 413 GoogleTest tests · 12 ng-log PRs · 6 google/benchmark PRs                  |
 | About              | Short summary and an at-a-glance card: role, focus, differentiator, featured and current project            |
 | Open Source        | Contribution graph, featured ng-log and google/benchmark cards, and a project → PR → problem → fix explorer |
 | Projects           | Real-Time Chat Server (3D architecture), DeployX (animated pipeline, in progress), REST API Testing Suite   |
@@ -55,7 +55,7 @@ ARISE cards from those repositories' READMEs.
 - **3D hero.** A React Three Fiber scene of the chat server's message path: client → REST/WebSocket
   → C++ service → PostgreSQL, and service → Redis → two backend replicas, with packets moving along
   each link and pointer parallax.
-- **Open-source explorer.** A GitHub-style contribution graph of the 29 merge dates feeds a
+- **Open-source explorer.** A GitHub-style contribution graph of the 37 merge dates feeds a
   three-pane explorer: pick a project, then a PR, and read the problem and the fix. Filters group
   the PRs by kind (concurrency, memory safety, undefined behaviour, correctness, build, testing,
   docs). Every PR links to the merged PR on GitHub.

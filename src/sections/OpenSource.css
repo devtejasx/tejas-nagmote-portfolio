@@ -711,6 +711,11 @@ button.cgraph__cell:hover {
   color: #b4f2d1;
 }
 
+.kind--feature {
+  border-color: rgb(255 214 102 / 0.5);
+  color: #ffe9b0;
+}
+
 @media (min-width: 960px) {
   .explorer__panes {
     grid-template-columns: 190px minmax(0, 1fr) minmax(0, 1.25fr);

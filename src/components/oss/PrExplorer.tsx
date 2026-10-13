@@ -27,6 +27,7 @@ const KINDS: PrKind[] = [
   'Correctness',
   'Build & CI',
   'Testing',
+  'Feature',
   'Docs',
 ]
 
