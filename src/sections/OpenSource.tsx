@@ -188,8 +188,7 @@ export function OpenSource() {
               41 merged pull requests across 8 upstream open-source projects
             </strong>{' '}
             maintained by external organizations, fixing concurrency, memory-safety and correctness
-            bugs through maintainer code review. 28 of the 41 are in C++ codebases. Counting my own
-            repositories, GitHub shows 57 merged pull requests in total.
+            bugs through maintainer code review. 28 of the 41 are in C++ codebases.
           </p>
         </SectionHeading>
 
