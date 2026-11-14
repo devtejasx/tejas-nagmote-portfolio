@@ -22,7 +22,7 @@ export const profile = {
   seeking: ['SDE', 'Backend', 'Systems', 'C++', 'Distributed systems'],
   /** Resume summary, split into paragraphs for the About section. */
   summary: [
-    'Computer Science undergraduate focused on C++ systems and backend engineering, with 41 merged pull requests across 8 external open-source projects.',
+    'Computer Science undergraduate focused on C++ systems and backend engineering, with 57 merged pull requests on GitHub, 41 of them across 8 external open-source projects.',
     'Experienced in debugging concurrency, memory-safety, and correctness bugs in widely used C++ codebases, and in building distributed backends with REST/WebSocket APIs, PostgreSQL, Redis, Docker, and CI/CD.',
   ],
   focusAreas: [
@@ -80,9 +80,20 @@ export interface Stat {
   context: string
 }
 
-/** The Impact section. PR figures match pullRequests.ts. */
+/**
+ * Every PR by devtejasx that GitHub reports as merged, as of 2026-11-14
+ * (search `author:devtejasx type:pr is:merged`). It is the 41 external merges in
+ * pullRequests.ts plus 3 in a PESU coursework repo and 13 in Tejas's own repos.
+ */
+export const mergedOnGitHub = 57
+
+/** The Impact section. Per-project PR figures match pullRequests.ts. */
 export const stats: Stat[] = [
-  { value: 41, label: 'Merged PRs', context: 'Reviewed and merged by external maintainers' },
+  {
+    value: mergedOnGitHub,
+    label: 'Merged PRs',
+    context: 'On GitHub · 41 merged by external maintainers into 8 projects',
+  },
   {
     value: 8,
     label: 'Open-source projects',
@@ -97,7 +108,10 @@ export const stats: Stat[] = [
 export const atAGlance: { key: string; value: string }[] = [
   { key: 'role', value: 'C++ Systems & Backend Engineer' },
   { key: 'builds', value: 'Backend and distributed systems' },
-  { key: 'differentiator', value: '41 merged PRs across 8 external open-source projects' },
+  {
+    key: 'differentiator',
+    value: '57 merged PRs on GitHub, 41 across 8 external open-source projects',
+  },
   { key: 'featured', value: 'Real-Time C++ Chat Server' },
   { key: 'building', value: 'DeployX, a self-service deployment platform' },
   {

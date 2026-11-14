@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { openSourceProjects, totalMergedPullRequests } from './openSource'
 import { education } from './education'
 import { prDetails, prKey } from './prDetails'
-import { links, stats } from './profile'
+import { links, mergedOnGitHub, stats } from './profile'
 import { projects } from './projects'
 import { skillCategories, skillEvidence } from './skills'
 import { timeline } from './timeline'
@@ -37,7 +37,8 @@ describe('open-source data matches GitHub', () => {
   })
 
   it('agrees with the headline stats', () => {
-    expect(stats.find((s) => s.label === 'Merged PRs')?.value).toBe(totalMergedPullRequests)
+    expect(stats.find((s) => s.label === 'Merged PRs')?.value).toBe(mergedOnGitHub)
+    expect(mergedOnGitHub).toBeGreaterThanOrEqual(totalMergedPullRequests)
     expect(stats.find((s) => s.label === 'Open-source projects')?.value).toBe(
       openSourceProjects.length,
     )
@@ -104,7 +105,7 @@ describe('impact stats', () => {
   })
 
   it('shows exactly the five resume figures', () => {
-    expect(stats.map((s) => s.value)).toEqual([41, 8, 413, 13, 7])
+    expect(stats.map((s) => s.value)).toEqual([57, 8, 413, 13, 7])
   })
 })
 

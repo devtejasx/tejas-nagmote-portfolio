@@ -30,7 +30,7 @@ export function Impact() {
             Impact
           </p>
           <h2 id="impact-title" className="impact__title">
-            Code reviewed and merged by <span className="gradient-text">external maintainers.</span>
+            Code that ships, <span className="gradient-text">most of it reviewed upstream.</span>
           </h2>
         </header>
 

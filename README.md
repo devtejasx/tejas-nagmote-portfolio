@@ -9,7 +9,7 @@ undergraduate at PES University.
 
 The site is built to answer five questions in the first screens: who Tejas is (a C++ systems
 and backend engineer), what he builds (backend and distributed systems), what sets him apart
-(41 merged pull requests across 8 external open-source projects), his best project (a real-time
+(57 merged pull requests on GitHub, 41 of them across 8 external open-source projects), his best project (a real-time
 C++ chat server) and what he is building now (DeployX). The 3D visuals are diagrams of that
 work rather than decoration: the hero is the chat server's message path, ending in Redis fanning
 events out to other replicas.
@@ -23,7 +23,7 @@ ARISE cards from those repositories' READMEs.
 | Section            | What it shows                                                                                               |
 | ------------------ | ----------------------------------------------------------------------------------------------------------- |
 | Hero               | Role, one-line pitch, roles of interest, and a 3D distributed-system scene                                  |
-| Impact             | 41 merged PRs · 8 projects · 413 GoogleTest tests · 13 ng-log PRs · 7 google/benchmark PRs                  |
+| Impact             | 57 merged PRs · 41 external · 8 projects · 413 GoogleTest tests · 13 ng-log PRs · 7 google/benchmark PRs    |
 | About              | Short summary and an at-a-glance card: role, focus, differentiator, featured and current project            |
 | Open Source        | Contribution graph, featured ng-log and google/benchmark cards, and a project → PR → problem → fix explorer |
 | Projects           | Real-Time Chat Server (3D architecture), DeployX (animated pipeline, in progress), REST API Testing Suite   |

@@ -46,7 +46,7 @@ export const timeline: TimelineStop[] = [
     when: 'Now',
     title: 'Systems, backend and open source',
     points: [
-      '41 merged pull requests across 8 external open-source projects',
+      '57 merged pull requests on GitHub, 41 of them across 8 external open-source projects',
       'Real-Time Chat Server in C++20, validated by 413 GoogleTest tests',
       'Building DeployX, a self-service deployment platform (in progress)',
     ],
