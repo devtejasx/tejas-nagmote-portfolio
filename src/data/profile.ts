@@ -22,7 +22,7 @@ export const profile = {
   seeking: ['SDE', 'Backend', 'Systems', 'C++', 'Distributed systems'],
   /** Resume summary, split into paragraphs for the About section. */
   summary: [
-    'Computer Science undergraduate focused on C++ systems and backend engineering, with 37 merged pull requests across 8 external open-source projects.',
+    'Computer Science undergraduate focused on C++ systems and backend engineering, with 41 merged pull requests across 8 external open-source projects.',
     'Experienced in debugging concurrency, memory-safety, and correctness bugs in widely used C++ codebases, and in building distributed backends with REST/WebSocket APIs, PostgreSQL, Redis, Docker, and CI/CD.',
   ],
   focusAreas: [
@@ -82,22 +82,22 @@ export interface Stat {
 
 /** The Impact section. PR figures match pullRequests.ts. */
 export const stats: Stat[] = [
-  { value: 37, label: 'Merged PRs', context: 'Reviewed and merged by external maintainers' },
+  { value: 41, label: 'Merged PRs', context: 'Reviewed and merged by external maintainers' },
   {
     value: 8,
     label: 'Open-source projects',
     context: 'Upstream repositories, external organizations',
   },
   { value: 413, label: 'GoogleTest tests', context: 'Real-Time Chat Server, in GitHub Actions CI' },
-  { value: 12, label: 'ng-log PRs', context: "Successor to Google's glog" },
-  { value: 6, label: 'google/benchmark PRs', context: "Google's C++ microbenchmark library" },
+  { value: 13, label: 'ng-log PRs', context: "Successor to Google's glog" },
+  { value: 7, label: 'google/benchmark PRs', context: "Google's C++ microbenchmark library" },
 ]
 
 /** The 15-second summary for recruiters, shown in About. */
 export const atAGlance: { key: string; value: string }[] = [
   { key: 'role', value: 'C++ Systems & Backend Engineer' },
   { key: 'builds', value: 'Backend and distributed systems' },
-  { key: 'differentiator', value: '37 merged PRs across 8 external open-source projects' },
+  { key: 'differentiator', value: '41 merged PRs across 8 external open-source projects' },
   { key: 'featured', value: 'Real-Time C++ Chat Server' },
   { key: 'building', value: 'DeployX, a self-service deployment platform' },
   {

@@ -185,10 +185,10 @@ export function OpenSource() {
         >
           <p>
             <strong className="oss__claim">
-              37 merged pull requests across 8 upstream open-source projects
+              41 merged pull requests across 8 upstream open-source projects
             </strong>{' '}
             maintained by external organizations, fixing concurrency, memory-safety and correctness
-            bugs through maintainer code review. 26 of the 37 are in C++ codebases.
+            bugs through maintainer code review. 28 of the 41 are in C++ codebases.
           </p>
         </SectionHeading>
 

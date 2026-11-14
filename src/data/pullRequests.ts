@@ -1,5 +1,5 @@
 // Generated from `gh search prs --author devtejasx --merged`: every PR merged
-// into an external repository as of 2026-10-13 (own repos and coursework are
+// into an external repository as of 2026-11-14 (own repos and coursework are
 // left out). Every number below resolves to https://github.com/<repo>/pull/<number>.
 
 export interface MergedPullRequest {
@@ -63,6 +63,11 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
         'fix(demangle): accept structor variants, default argument scopes and std-qualified unresolved names',
       mergedAt: '2026-08-21',
     },
+    {
+      number: 63,
+      title: 'fix: say when a stack trace is cut off at the depth limit',
+      mergedAt: '2026-10-21',
+    },
   ],
   'google/benchmark': [
     {
@@ -94,6 +99,11 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
       number: 2274,
       title: 'Diagnose invalid PauseTiming()/ResumeTiming() calls (#2235)',
       mergedAt: '2026-09-21',
+    },
+    {
+      number: 2291,
+      title: 'Support DoNotOptimize on types with const members (#1997)',
+      mergedAt: '2026-10-13',
     },
   ],
   'ThePhrozenKeep/D2MOO': [
@@ -159,6 +169,17 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
       number: 2054,
       title: 'fix: exclude a path member when any candidate key fails normalization',
       mergedAt: '2026-10-05',
+    },
+    {
+      number: 2081,
+      title: 'fix: route clipboard copies through a helper that never throws',
+      mergedAt: '2026-10-13',
+    },
+    {
+      number: 2268,
+      title:
+        'fix(devtools): keep a selector only if cleaning leaves it matching the picked element',
+      mergedAt: '2026-11-03',
     },
   ],
   'konflux-ci/coverport': [

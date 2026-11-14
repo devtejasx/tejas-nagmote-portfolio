@@ -8,8 +8,8 @@ import { skillCategories, skillEvidence } from './skills'
 import { timeline } from './timeline'
 
 describe('open-source data matches GitHub', () => {
-  it('counts 37 merged PRs across 8 projects', () => {
-    expect(totalMergedPullRequests).toBe(37)
+  it('counts 41 merged PRs across 8 projects', () => {
+    expect(totalMergedPullRequests).toBe(41)
     expect(openSourceProjects).toHaveLength(8)
   })
 
@@ -18,10 +18,10 @@ describe('open-source data matches GitHub', () => {
       openSourceProjects.map((p) => [p.name, p.pullRequests.length]),
     )
     expect(counts).toEqual({
-      'ng-log': 12,
-      'google/benchmark': 6,
+      'ng-log': 13,
+      'google/benchmark': 7,
       D2MOO: 8,
-      'grafana-pathfinder-app': 5,
+      'grafana-pathfinder-app': 7,
       Kornia: 2,
       coverport: 1,
       MicroPython: 1,
@@ -104,7 +104,7 @@ describe('impact stats', () => {
   })
 
   it('shows exactly the five resume figures', () => {
-    expect(stats.map((s) => s.value)).toEqual([37, 8, 413, 12, 6])
+    expect(stats.map((s) => s.value)).toEqual([41, 8, 413, 13, 7])
   })
 })
 
@@ -112,7 +112,7 @@ describe('skill evidence', () => {
   const known = new Set([
     ...projects.map((p) => p.title),
     ...openSourceProjects.map((p) => p.name),
-    '37 merged open-source PRs',
+    '41 merged open-source PRs',
   ])
 
   it('only points at real projects and repositories', () => {

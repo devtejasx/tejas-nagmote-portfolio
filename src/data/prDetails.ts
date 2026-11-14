@@ -90,6 +90,12 @@ export const prDetails: Record<string, PrDetail> = {
       'The internal Itanium demangler rejected three constructs that GCC and Clang emit, so the affected frames appeared mangled in failure stack traces.',
     fix: 'Accept the C4/C5/D4/D5 structor variants, an omitted default-argument parameter number, and std-qualified unresolved types.',
   },
+  'ng-log/ng-log#63': {
+    kind: 'Correctness',
+    problem:
+      'Both stack dumps, from LOG(FATAL) and from the failure signal handler, stopped at 32 frames without saying so, so a deep trace looked complete while its outer frames were missing.',
+    fix: 'Capture one frame more than is printed and, when it exists, end the trace with an “omitted” marker, written async-signal-safely in the signal handler.',
+  },
 
   // google/benchmark
   'google/benchmark#2265': {
@@ -127,6 +133,12 @@ export const prDetails: Record<string, PrDetail> = {
     problem:
       'In release builds, calling PauseTiming() or ResumeTiming() outside the benchmark loop added an absolute clock reading to every run’s time.',
     fix: 'Report the misuse as a benchmark error in every build configuration instead.',
+  },
+  'google/benchmark#2291': {
+    kind: 'Correctness',
+    problem:
+      'DoNotOptimize bound its argument as an asm output operand, so GCC and Clang both refused to compile it for a type with a const data member.',
+    fix: 'Add a small trait that routes non-writable types to an asm input operand, keeping the memory clobber so the optimisation barrier is unchanged.',
   },
 
   // D2MOO
@@ -207,6 +219,18 @@ export const prDetails: Record<string, PrDetail> = {
     problem:
       'Path progress filtered each candidate storage key on its own, so a long bundled id kept one key shape and lost the other; a record stored under the dropped shape was never found and scored 0%, dragging down the path’s average.',
     fix: 'Make the check all-or-nothing: a member whose keys would be rewritten resolves as unresolved and is left out of the mean, with tests through both the id and url branches.',
+  },
+  'grafana/grafana-pathfinder-app#2081': {
+    kind: 'Correctness',
+    problem:
+      'Where navigator.clipboard is undefined, such as plain-HTTP origins, writeText threw synchronously, so the chained error handling never ran and copy buttons silently did nothing.',
+    fix: 'Route every copy through one helper that reports success or failure, falls back to execCommand inside focus-trapped modals, and is guarded by a test against new direct clipboard calls.',
+  },
+  'grafana/grafana-pathfinder-app#2268': {
+    kind: 'Correctness',
+    problem:
+      'The element picker cleaned dynamic attributes after its uniqueness check, so a saved selector could stop matching the element that was picked.',
+    fix: 'Re-check the selector after cleaning and keep the uncleaned one if it is no longer unique; the hover preview now shows the selector a click would record.',
   },
 
   // coverport, MicroPython, PySTAC
