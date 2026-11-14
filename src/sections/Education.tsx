@@ -11,7 +11,7 @@ export function Education() {
   return (
     <section id="education" className="section education" aria-labelledby="education-title">
       <div className="container">
-        <SectionHeading index="06" eyebrow="Education" id="education-title" title="Education." />
+        <SectionHeading index="07" eyebrow="Education" id="education-title" title="Education." />
 
         <Reveal className="edu">
           <span className="edu__marker" aria-hidden="true">

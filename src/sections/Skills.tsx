@@ -103,7 +103,7 @@ export function Skills() {
   return (
     <section id="skills" className="section skills" aria-labelledby="skills-title">
       <div className="container">
-        <SectionHeading index="04" eyebrow="Skills" id="skills-title" title="Technical arsenal.">
+        <SectionHeading index="05" eyebrow="Skills" id="skills-title" title="Technical arsenal.">
           <p>
             Grouped by what each tool is for. Select any skill to see where it shows up in the work
             on this page.

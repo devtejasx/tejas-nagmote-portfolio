@@ -11,6 +11,7 @@ import { Hero } from './sections/Hero'
 import { Impact } from './sections/Impact'
 import { OpenSource } from './sections/OpenSource'
 import { Projects } from './sections/Projects'
+import { Recognition } from './sections/Recognition'
 import { Skills } from './sections/Skills'
 import { Timeline } from './sections/Timeline'
 
@@ -56,6 +57,9 @@ export default function App() {
           </Guard>
           <Guard name="open-source">
             <OpenSource />
+          </Guard>
+          <Guard name="recognition">
+            <Recognition />
           </Guard>
           <Guard name="projects">
             <Projects />

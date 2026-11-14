@@ -201,7 +201,7 @@ export function Projects() {
     <section id="projects" className="section projects" aria-labelledby="projects-title">
       <div className="container">
         <SectionHeading
-          index="03"
+          index="04"
           eyebrow="Projects"
           id="projects-title"
           title="Things I've built."

@@ -5,6 +5,7 @@ import { prDetails, prKey } from './prDetails'
 import { links, mergedOnGitHub, stats } from './profile'
 import { projects } from './projects'
 import { skillCategories, skillEvidence } from './skills'
+import { kornia } from './recognition'
 import { timeline } from './timeline'
 
 describe('open-source data matches GitHub', () => {
@@ -154,5 +155,21 @@ describe('pull request details', () => {
   it('tags the resume highlights correctly', () => {
     expect(prDetails[prKey('ng-log/ng-log', 37)].kind).toBe('Concurrency')
     expect(prDetails[prKey('google/benchmark', 2265)].kind).toBe('Memory safety')
+  })
+})
+
+describe('recognition', () => {
+  it('points at a merged Kornia PR and its merge commit', () => {
+    const merged = openSourceProjects.find((p) => p.repo === kornia.repo)?.pullRequests ?? []
+    expect(merged.map((p) => p.number)).toContain(kornia.pullRequest)
+    expect(kornia.commit).toMatch(/^[0-9a-f]{40}$/)
+    const links = kornia.links.map((l) => l.href)
+    expect(links).toContain(`https://github.com/${kornia.repo}/pull/${kornia.pullRequest}`)
+    expect(links).toContain(`https://github.com/${kornia.repo}/commit/${kornia.commit}`)
+  })
+
+  it('uses https links only and keeps the XERJ figures', () => {
+    for (const l of kornia.links) expect(l.href).toMatch(/^https:\/\//)
+    expect(kornia.stats.map((s) => s.value)).toEqual([1, 1, 6, 237])
   })
 })
