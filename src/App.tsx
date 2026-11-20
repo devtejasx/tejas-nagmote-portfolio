@@ -7,6 +7,7 @@ import { ScrollProgress } from './components/ScrollProgress'
 import { About } from './sections/About'
 import { Contact } from './sections/Contact'
 import { Education } from './sections/Education'
+import { Experience } from './sections/Experience'
 import { Hero } from './sections/Hero'
 import { Impact } from './sections/Impact'
 import { OpenSource } from './sections/OpenSource'
@@ -54,6 +55,9 @@ export default function App() {
           </Guard>
           <Guard name="about">
             <About />
+          </Guard>
+          <Guard name="experience">
+            <Experience />
           </Guard>
           <Guard name="open-source">
             <OpenSource />

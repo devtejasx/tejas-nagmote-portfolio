@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { openSourceProjects, totalMergedPullRequests } from './openSource'
 import { education } from './education'
+import { experience } from './experience'
 import { prDetails, prKey } from './prDetails'
 import { links, stats } from './profile'
 import { projects } from './projects'
@@ -91,6 +92,16 @@ describe('education', () => {
   it('lists university, HSC and ICSE, newest first', () => {
     expect(education.map((e) => e.end)).toEqual([2027, 2023, 2020])
     expect(education[0].institution).toBe('PES University')
+  })
+})
+
+describe('experience', () => {
+  it('lists the 7XLabs internship and its two clients, with https links', () => {
+    expect(experience.map((e) => e.company)).toEqual(['7XLabs'])
+    const [job] = experience
+    expect(job.clients.map((c) => c.client)).toEqual(['Code Era Institute', 'Garamshala Café'])
+    for (const href of [job.companySite, ...job.clients.map((c) => c.site)])
+      expect(href).toMatch(/^https:\/\//)
   })
 })
 

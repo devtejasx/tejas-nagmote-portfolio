@@ -38,7 +38,7 @@ export function Recognition() {
     <section id="recognition" className="section recognition" aria-labelledby="recognition-title">
       <div className="container">
         <SectionHeading
-          index="03"
+          index="04"
           eyebrow="Recognition"
           id="recognition-title"
           title="Publications & Open-Source Recognition"

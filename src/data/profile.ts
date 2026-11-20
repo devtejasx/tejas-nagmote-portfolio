@@ -22,7 +22,7 @@ export const profile = {
   seeking: ['SDE', 'Backend', 'Systems', 'C++', 'Distributed systems'],
   /** Resume summary, split into paragraphs for the About section. */
   summary: [
-    'Computer Science undergraduate focused on C++ systems and backend engineering, with 41 merged pull requests across 8 external open-source projects.',
+    'Computer Science undergraduate focused on C++ systems and backend engineering: backend developer intern at 7XLabs, with 41 merged pull requests across 8 external open-source projects.',
     'Experienced in debugging concurrency, memory-safety, and correctness bugs in widely used C++ codebases, and in building distributed backends with REST/WebSocket APIs, PostgreSQL, Redis, Docker, and CI/CD.',
   ],
   focusAreas: [
@@ -97,6 +97,7 @@ export const stats: Stat[] = [
 export const atAGlance: { key: string; value: string }[] = [
   { key: 'role', value: 'C++ Systems & Backend Engineer' },
   { key: 'builds', value: 'Backend and distributed systems' },
+  { key: 'experience', value: 'Backend developer intern at 7XLabs (since Aug 2026)' },
   { key: 'differentiator', value: '41 merged PRs across 8 external open-source projects' },
   { key: 'featured', value: 'Real-Time C++ Chat Server' },
   { key: 'building', value: 'DeployX, a self-service deployment platform' },

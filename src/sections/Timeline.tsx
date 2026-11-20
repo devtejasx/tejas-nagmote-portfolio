@@ -25,7 +25,7 @@ export function Timeline() {
     <section id="timeline" className="section timeline-section" aria-labelledby="timeline-title">
       <div className="container">
         <SectionHeading
-          index="06"
+          index="07"
           eyebrow="Timeline"
           id="timeline-title"
           title="How the engineering came together."

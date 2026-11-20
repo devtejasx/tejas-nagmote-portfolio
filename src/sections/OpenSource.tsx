@@ -178,7 +178,7 @@ export function OpenSource() {
       <div className="oss__glow" aria-hidden="true" />
       <div className="container">
         <SectionHeading
-          index="02"
+          index="03"
           eyebrow="Open Source"
           id="oss-title"
           title="Open Source Engineering"

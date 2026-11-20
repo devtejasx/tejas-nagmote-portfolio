@@ -44,7 +44,7 @@ export function Contact() {
       <div className="container contact__inner">
         <Reveal className="contact__intro">
           <p className="section-heading__eyebrow mono">
-            <span className="section-heading__index">08</span>
+            <span className="section-heading__index">09</span>
             <span aria-hidden="true">/</span>
             Contact
           </p>

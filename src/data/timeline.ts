@@ -46,6 +46,7 @@ export const timeline: TimelineStop[] = [
     when: 'Now',
     title: 'Systems, backend and open source',
     points: [
+      'Backend developer intern at 7XLabs: client LMS and billing systems',
       '41 merged pull requests across 8 external open-source projects',
       'Real-Time Chat Server in C++20, validated by 413 GoogleTest tests',
       'Building DeployX, a self-service deployment platform (in progress)',
