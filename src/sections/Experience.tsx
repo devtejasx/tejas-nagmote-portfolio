@@ -52,6 +52,13 @@ export function Experience() {
                       </a>
                     </h4>
                     <p className="exp-client__about">{c.about}</p>
+                    <ul className="exp-client__scale" aria-label={`${c.client} usage`}>
+                      {c.scale.map((s) => (
+                        <li key={s} className="mono">
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
                     <p className="exp-client__summary">{c.summary}</p>
                   </li>
                 ))}

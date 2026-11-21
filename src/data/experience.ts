@@ -9,6 +9,8 @@ export interface ClientWork {
   site: string
   /** The part of the client's product Tejas worked on. */
   area: string
+  /** Usage figures for the client's system, shown as small chips. */
+  scale: string[]
   summary: string
 }
 
@@ -47,16 +49,18 @@ export const experience: ExperienceEntry[] = [
         about: 'Tech-training institute, Nagpur',
         site: 'https://codeeraa.in',
         area: 'LMS portal',
+        scale: ['50–100 registered users', '~40 active students'],
         summary:
-          'Developed the backend of the learning portal: student authentication, recorded-lecture access, and APIs that track lecture progress, assignments, grading and quiz scores for the student and instructor dashboards.',
+          'Developed the backend of the learning portal: login, lecture access, the student and instructor dashboards, and the APIs for progress, assignments, grading and quizzes.',
       },
       {
         client: 'Garamshala Café',
         about: '24/7 café and coworking space, Nagpur',
         site: 'https://garamshalacafe.in',
         area: 'Billing system',
+        scale: ['~120 orders a day'],
         summary:
-          "Built the billing system for the café's QR table-ordering platform, turning each table's orders into itemised bills with taxes and totals, consistent from the kitchen feed to checkout.",
+          "Built the billing system for the café's QR table-ordering platform, turning every order into an itemised bill with taxes and totals, consistent from the kitchen feed to checkout.",
       },
     ],
   },

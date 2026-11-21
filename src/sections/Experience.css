@@ -108,6 +108,24 @@
   font-size: 13px;
 }
 
+.exp-client__scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exp-client__scale li {
+  padding: 3px 10px;
+  border: 1px solid rgb(91 140 255 / 0.35);
+  border-radius: 999px;
+  color: var(--blue);
+  background: rgb(91 140 255 / 0.08);
+  font-size: 12px;
+}
+
 .exp-client__summary {
   margin-top: 6px;
   color: #c9d1ea;

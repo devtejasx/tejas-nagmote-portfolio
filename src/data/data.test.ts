@@ -103,6 +103,14 @@ describe('experience', () => {
     for (const href of [job.companySite, ...job.clients.map((c) => c.site)])
       expect(href).toMatch(/^https:\/\//)
   })
+
+  it('shows the usage figures from the resume for each client', () => {
+    const [job] = experience
+    expect(job.clients.map((c) => c.scale)).toEqual([
+      ['50–100 registered users', '~40 active students'],
+      ['~120 orders a day'],
+    ])
+  })
 })
 
 describe('impact stats', () => {
