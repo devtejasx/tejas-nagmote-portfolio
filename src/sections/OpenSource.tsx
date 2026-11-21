@@ -1,13 +1,9 @@
 import { useRef, useState } from 'react'
-import { m } from 'motion/react'
-import { ArrowUpRight, GitPullRequest, SearchCode } from 'lucide-react'
-import { revealViewport, staggerChildren } from '../animations/variants'
-import { Counter } from '../components/Counter'
+import { ArrowUpRight, Award, GitMerge, GitPullRequest } from 'lucide-react'
 import { ContributionGraph, type MergeEvent } from '../components/oss/ContributionGraph'
 import { PrExplorer } from '../components/oss/PrExplorer'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
-import { TiltCard } from '../components/TiltCard'
 import {
   openSourceProjects,
   pullUrl,
@@ -16,110 +12,152 @@ import {
   type OpenSourceProject,
 } from '../data/openSource'
 import { prMatches, type KindFilter } from '../data/prDetails'
+import { kornia } from '../data/recognition'
 import './OpenSource.css'
 
-const featured = openSourceProjects.filter((p) => p.featured)
-const maxCount = Math.max(...openSourceProjects.map((p) => p.pullRequests.length))
+const longDate = (d: string) =>
+  new Date(`${d}T00:00:00Z`).toLocaleDateString('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
 
-function Distribution() {
+const cppCount = openSourceProjects
+  .filter((p) => p.language === 'C++')
+  .reduce((n, p) => n + p.pullRequests.length, 0)
+
+function KorniaSpotlight() {
+  const pr = kornia.links.find((l) => l.href.endsWith(`/pull/${kornia.pullRequest}`))!
+  const commit = kornia.links.find((l) => l.href.includes('/commit/'))!
+  const xerj = kornia.links.filter((l) => l.kind === 'xerj')
+  const files = kornia.stats.find((s) => s.icon === 'files')?.value
+  const lines = kornia.stats.find((s) => s.icon === 'lines')?.value
+
   return (
-    <m.ul
-      className="oss-bars"
-      aria-label="Merged pull requests per project"
-      variants={staggerChildren(0.08, 0.2)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={revealViewport}
-    >
-      {openSourceProjects.map((p) => (
-        <li key={p.repo} className="oss-bars__row">
-          <span className="oss-bars__name">{p.name}</span>
-          <span className="oss-bars__track" aria-hidden="true">
-            <m.span
-              className="oss-bars__fill"
-              variants={{
-                hidden: { scaleX: 0 },
-                visible: { scaleX: 1, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              style={{ width: `${(p.pullRequests.length / maxCount) * 100}%` }}
-            />
-          </span>
-          <span className="oss-bars__count mono">{p.pullRequests.length}</span>
-        </li>
-      ))}
-    </m.ul>
+    <article id="kornia" className="spotlight card" aria-labelledby="kornia-title">
+      <div className="spotlight__main">
+        <p className="spotlight__eyebrow mono">
+          <GitMerge size={14} aria-hidden="true" />
+          Featured contribution · {kornia.repo}
+        </p>
+        <h3 id="kornia-title" className="spotlight__title">
+          {kornia.title}
+        </h3>
+        <p className="spotlight__meta">
+          <span className="status status--ok">Merged {longDate(kornia.mergedAt)}</span>
+          <span className="status">Breaking change</span>
+          <span className="mono spotlight__pr">PR #{kornia.pullRequest}</span>
+        </p>
+        <p className="spotlight__about">{kornia.projectAbout}</p>
+        <ul className="spotlight__points">
+          {kornia.summary.map((s) => (
+            <li key={s}>{s}</li>
+          ))}
+        </ul>
+        <div className="spotlight__links">
+          <a className="btn btn--sm" href={pr.href} target="_blank" rel="noopener noreferrer">
+            <GitPullRequest size={15} aria-hidden="true" />
+            {pr.label}
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <a
+            className="btn btn--sm btn--ghost"
+            href={commit.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {commit.label}
+            <ArrowUpRight size={14} aria-hidden="true" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+
+      <aside className="spotlight__recognition" aria-labelledby="xerj-title">
+        <p className="spotlight__badge mono">
+          <Award size={14} aria-hidden="true" />
+          External recognition
+        </p>
+        <h4 id="xerj-title" className="spotlight__venue">
+          Selected for the {kornia.venue.name}
+        </h4>
+        <p className="spotlight__venue-about">{kornia.venue.about}</p>
+        <dl className="spotlight__facts">
+          <div>
+            <dt>Listed</dt>
+            <dd>{longDate(kornia.selectedAt)}</dd>
+          </div>
+          <div>
+            <dt>Commit</dt>
+            <dd className="mono">{kornia.commit.slice(0, 7)}</dd>
+          </div>
+          {files !== undefined && lines !== undefined && (
+            <div>
+              <dt>Scope</dt>
+              <dd>
+                {files} files · {lines} lines
+                <span className="spotlight__note">, as XERJ counts</span>
+              </dd>
+            </div>
+          )}
+        </dl>
+        <ul className="spotlight__xerj-links">
+          {xerj.map((l) => (
+            <li key={l.href}>
+              <a className="text-link" href={l.href} target="_blank" rel="noopener noreferrer">
+                {l.label}
+                <ArrowUpRight size={13} aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </article>
   )
 }
 
-function RepoHeader({ project }: { project: OpenSourceProject }) {
+function RepoCard({ project }: { project: OpenSourceProject }) {
   return (
-    <div className="repo-card__header">
-      <div className="repo-card__title-row">
-        <h3 className="repo-card__name">
+    <article className="repo card">
+      <header className="repo__head">
+        <h4 className="repo__name">
           <a href={repoUrl(project.repo)} target="_blank" rel="noopener noreferrer">
             {project.name}
-            <ArrowUpRight size={20} aria-hidden="true" />
             <span className="sr-only"> repository (opens in a new tab)</span>
           </a>
-        </h3>
-        <span className="repo-card__count">
-          <GitPullRequest size={14} aria-hidden="true" />
-          {project.pullRequests.length} merged
+        </h4>
+        <span className="repo__count mono">{project.pullRequests.length} merged</span>
+      </header>
+      <p className="repo__meta mono">
+        <span
+          className={`lang-dot lang-dot--${project.language.replaceAll('+', 'p').toLowerCase()}`}
+        />
+        <span>
+          {project.language} · {project.contributionType}
         </span>
-      </div>
-      <p className="repo-card__repo mono">{project.repo}</p>
-      <div className="repo-card__tags">
-        <span className="repo-card__lang">
-          <span
-            className={`lang-dot lang-dot--${project.language.replaceAll('+', 'p').toLowerCase()}`}
-          />
-          {project.language}
-        </span>
-        <span className="repo-card__type">{project.contributionType}</span>
-      </div>
-    </div>
-  )
-}
-
-function FeaturedCard({
-  project,
-  onInspect,
-}: {
-  project: OpenSourceProject
-  onInspect: (repo: string, pr: number) => void
-}) {
-  return (
-    <TiltCard as="article" className="repo-card repo-card--featured glass" maxTilt={3}>
-      <RepoHeader project={project} />
-      <p className="repo-card__about">{project.about}</p>
-      <ul className="repo-card__highlights">
-        {project.highlights.map((h) => (
-          <li key={h.pullRequest}>
-            <p>{h.text}</p>
-            <div className="repo-card__highlight-actions">
-              <button
-                type="button"
-                className="repo-card__inspect"
-                onClick={() => onInspect(project.repo, h.pullRequest)}
-              >
-                <SearchCode size={15} aria-hidden="true" />
-                Problem → fix
-              </button>
+      </p>
+      <p className="repo__about">{project.about}</p>
+      {project.highlights.length > 0 && (
+        <ul className="repo__highlights">
+          {project.highlights.map((h) => (
+            <li key={h.pullRequest}>
+              {h.text}{' '}
               <a
+                className="repo__pr mono"
                 href={pullUrl(project.repo, h.pullRequest)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-link mono"
               >
-                PR #{h.pullRequest}
-                <ArrowUpRight size={14} aria-hidden="true" />
-                <span className="sr-only"> (opens in a new tab)</span>
+                #{h.pullRequest}
+                <span className="sr-only"> on GitHub (opens in a new tab)</span>
               </a>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </TiltCard>
+            </li>
+          ))}
+        </ul>
+      )}
+    </article>
   )
 }
 
@@ -154,8 +192,7 @@ export function OpenSource() {
     setFilter(k)
     const inRepo = projectFor(repo)?.pullRequests.some((x) => prMatches(repo, x.number, k))
     if (inRepo) {
-      const keep = prMatches(repo, pr, k)
-      if (!keep) selectRepo(repo)
+      if (!prMatches(repo, pr, k)) selectRepo(repo)
       return
     }
     const next = openSourceProjects.find((p) =>
@@ -174,68 +211,57 @@ export function OpenSource() {
   }
 
   return (
-    <section id="open-source" className="section oss" aria-labelledby="oss-title">
-      <div className="oss__glow" aria-hidden="true" />
+    <section id="open-source" className="section section--divided oss" aria-labelledby="oss-title">
       <div className="container">
         <SectionHeading
-          index="03"
-          eyebrow="Open Source"
+          eyebrow="Open source"
           id="oss-title"
-          title="Open Source Engineering"
+          title="Fixes merged into established codebases"
         >
           <p>
-            <strong className="oss__claim">
-              41 merged pull requests across 8 upstream open-source projects
-            </strong>{' '}
-            maintained by external organizations, fixing concurrency, memory-safety and correctness
-            bugs through maintainer code review. 28 of the 41 are in C++ codebases.
+            <strong>
+              {totalMergedPullRequests} merged pull requests across {openSourceProjects.length}{' '}
+              external projects
+            </strong>
+            , each reviewed and merged by the project’s maintainers: concurrency, memory-safety and
+            correctness fixes in C++ libraries such as ng-log and google/benchmark, plus Python,
+            TypeScript and embedded C. {cppCount} of the {totalMergedPullRequests} are in C++.
           </p>
         </SectionHeading>
 
-        <Reveal className="oss-summary glass">
-          <div className="oss-summary__headline">
-            <Counter
-              value={totalMergedPullRequests}
-              className="oss-summary__number gradient-text"
-            />
-            <div>
-              <p className="oss-summary__label">merged pull requests</p>
-              <p className="oss-summary__sub">
-                across <strong>{openSourceProjects.length}</strong> external open-source projects
-              </p>
-            </div>
-          </div>
-          <Distribution />
+        <Reveal>
+          <KorniaSpotlight />
+        </Reveal>
+
+        <h3 className="oss__subhead">By project</h3>
+        <div className="oss__repos">
+          {openSourceProjects.map((p) => (
+            <RepoCard key={p.repo} project={p} />
+          ))}
+        </div>
+
+        <h3 className="oss__subhead">Every merged pull request</h3>
+        <p className="oss__subcopy">
+          Pick a project, then a pull request, to see the problem it fixed and how. Days in the
+          calendar open the PRs merged that day.
+        </p>
+        <div className="oss__calendar card">
           <ContributionGraph
             projects={openSourceProjects}
             selectedDate={selectedDate}
             onSelectDay={selectDay}
           />
-        </Reveal>
-
-        <div className="oss__featured">
-          {featured.map((p, i) => (
-            <Reveal key={p.repo} delay={i * 0.1} className="oss__cell">
-              <FeaturedCard project={p} onInspect={(r, n) => select(r, n, true)} />
-            </Reveal>
-          ))}
         </div>
-
-        <Reveal className="oss__explorer">
-          <h3 className="oss__explorer-title">
-            Every merged PR: <span className="gradient-text">project → PR → problem → fix</span>
-          </h3>
-          <PrExplorer
-            ref={explorer}
-            projects={openSourceProjects}
-            repo={repo}
-            pr={pr}
-            filter={filter}
-            onSelectRepo={selectRepo}
-            onSelectPr={setPr}
-            onFilter={applyFilter}
-          />
-        </Reveal>
+        <PrExplorer
+          ref={explorer}
+          projects={openSourceProjects}
+          repo={repo}
+          pr={pr}
+          filter={filter}
+          onSelectRepo={selectRepo}
+          onSelectPr={setPr}
+          onFilter={applyFilter}
+        />
       </div>
     </section>
   )

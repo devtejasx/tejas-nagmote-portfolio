@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-project="codecompass">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>CodeCompass: Sandboxed Code Execution · Tejas Nagmote</title>
+    <meta
+      name="description"
+      content="Case study: a learning platform that compiles and runs learner code in throwaway, network-less containers. Isolation design, decisions, testing and performance work."
+    />
+    <meta name="author" content="Tejas Nagmote" />
+    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href="%VITE_SITE_URL%projects/codecompass/" />
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.dataset.theme = 'light'
+          document.querySelector('meta[name="theme-color"]').content = '#fbfbfc'
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png" />
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+    <link rel="manifest" href="../../site.webmanifest" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Tejas Nagmote" />
+    <meta property="og:title" content="CodeCompass: Sandboxed Code Execution · Tejas Nagmote" />
+    <meta
+      property="og:description"
+      content="Case study: a learning platform that compiles and runs learner code in throwaway, network-less containers. Isolation design, decisions, testing and performance work."
+    />
+    <meta property="og:url" content="%VITE_SITE_URL%projects/codecompass/" />
+    <meta property="og:image" content="%VITE_SITE_URL%og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CodeCompass: Sandboxed Code Execution · Tejas Nagmote" />
+    <meta
+      name="twitter:description"
+      content="Case study: a learning platform that compiles and runs learner code in throwaway, network-less containers. Isolation design, decisions, testing and performance work."
+    />
+    <meta name="twitter:image" content="%VITE_SITE_URL%og-image.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p
+        style="
+          max-width: 640px;
+          margin: 15vh auto;
+          padding: 0 20px;
+          font-family: system-ui, sans-serif;
+        "
+      >
+        CodeCompass: Sandboxed Code Execution: Case study: a learning platform that compiles and
+        runs learner code in throwaway, network-less containers. Isolation design, decisions,
+        testing and performance work. <a href="../../">Back to the portfolio</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/project.tsx"></script>
+  </body>
+</html>

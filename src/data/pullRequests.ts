@@ -182,7 +182,7 @@ export const mergedPullRequests: Record<string, MergedPullRequest[]> = {
       mergedAt: '2026-11-03',
     },
   ],
-  'konflux-ci/coverport': [
+  'fullsend-ai/coverport': [
     {
       number: 113,
       title: 'test(#110): add unit tests for coverage-jira-tasks URL helpers',

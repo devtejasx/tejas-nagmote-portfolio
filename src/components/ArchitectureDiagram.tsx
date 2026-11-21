@@ -2,6 +2,7 @@ import { useId, useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
 import type { Diagram, DiagramNode } from '../data/projects'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import { clipToBoxes, labelPlacement } from './diagramGeometry'
 import './ArchitectureDiagram.css'
 
 const NODE = { wide: { w: 116, h: 54 }, narrow: { w: 128, h: 54 } }
@@ -9,41 +10,6 @@ const WIDTH = { wide: 640, narrow: 320 }
 const BAND_HEIGHT = 40
 
 type Layout = keyof typeof NODE
-
-/** Shortens the segment a→b so it starts and ends on the node rectangles, not their centres. */
-function clipToBoxes(a: [number, number], b: [number, number], box: { w: number; h: number }) {
-  const dx = b[0] - a[0]
-  const dy = b[1] - a[1]
-  const t = Math.min(
-    dx === 0 ? Infinity : box.w / 2 / Math.abs(dx),
-    dy === 0 ? Infinity : box.h / 2 / Math.abs(dy),
-  )
-  const pad = 6 / Math.hypot(dx, dy)
-  const s = t + pad
-  return {
-    x1: a[0] + dx * s,
-    y1: a[1] + dy * s,
-    x2: b[0] - dx * s,
-    y2: b[1] - dy * s,
-  }
-}
-
-/**
- * Puts an edge label beside its line: right of vertical edges, above
- * horizontal ones, and on the outer side of diagonals so that two edges
- * fanning out of the same node do not stack their labels.
- */
-function labelPlacement(x1: number, y1: number, x2: number, y2: number) {
-  const mx = (x1 + x2) / 2
-  const my = (y1 + y2) / 2
-  const dx = x2 - x1
-  const dy = y2 - y1
-  if (Math.abs(dx) < 4) return { x: mx + 8, y: my, textAnchor: 'start' as const }
-  if (Math.abs(dy) < 4) return { x: mx, y: my - 8, textAnchor: 'middle' as const }
-  return dx < 0
-    ? { x: mx - 6, y: my, textAnchor: 'end' as const }
-    : { x: mx + 6, y: my, textAnchor: 'start' as const }
-}
 
 interface ArchitectureDiagramProps {
   diagram: Diagram
@@ -114,7 +80,10 @@ export function ArchitectureDiagram({ diagram }: ArchitectureDiagramProps) {
               />
               <line x1={x1} y1={y1} x2={x2} y2={y2} className="arch__flow" />
               {edge.label && Math.hypot(x2 - x1, y2 - y1) > 50 && (
-                <text {...labelPlacement(x1, y1, x2, y2)} className="arch__edge-label">
+                <text
+                  {...labelPlacement(x1, y1, x2, y2, WIDTH[layout], edge.label.length * 7)}
+                  className="arch__edge-label"
+                >
                   {edge.label}
                 </text>
               )}
@@ -147,7 +116,7 @@ export function ArchitectureDiagram({ diagram }: ArchitectureDiagramProps) {
           <g transform={`translate(8 ${graphHeight})`} className="arch__band">
             <rect width={WIDTH[layout] - 16} height={BAND_HEIGHT} rx={10} />
             <text x={(WIDTH[layout] - 16) / 2} y={BAND_HEIGHT / 2 + 4} textAnchor="middle">
-              {narrow ? 'auth · resilience · observability' : diagram.band}
+              {narrow ? (diagram.bandNarrow ?? diagram.band) : diagram.band}
             </text>
           </g>
         )}

@@ -1,64 +1,108 @@
 import { education } from './education'
+import { openSourceProjects, totalMergedPullRequests } from './openSource'
+import { kornia } from './recognition'
 
-export interface TimelineStop {
+export type TimelineKind = 'employment' | 'open-source' | 'recognition' | 'education'
+
+export const kindLabels: Record<TimelineKind, string> = {
+  employment: 'Employment',
+  'open-source': 'Open source',
+  recognition: 'Recognition',
+  education: 'Education',
+}
+
+export interface TimelineEntry {
   id: string
-  /** A year from the resume, or a label for undated, ongoing work. */
+  kind: TimelineKind
+  /** Display date or range. */
   when: string
   title: string
-  place?: string
+  org: string
+  orgHref?: string
   points: string[]
-  kind: 'education' | 'engineering' | 'future'
+  /** Renders the 7XLabs client cards under this entry. */
+  showClients?: boolean
 }
 
 const [university, hsc, icse] = education
 
-/**
- * Only dates the resume states. Current engineering work is shown as "Now"
- * rather than given dates the resume does not have.
- */
-export const timeline: TimelineStop[] = [
+const monthYear = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString('en', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+
+const firstMerge = openSourceProjects
+  .flatMap((p) => p.pullRequests.map((pr) => pr.mergedAt))
+  .sort()[0]
+
+const perProject = [...openSourceProjects]
+  .sort((a, b) => b.pullRequests.length - a.pullRequests.length)
+  .map((p) => `${p.name} ${p.pullRequests.length}`)
+  .join(' · ')
+
+/** Newest first. Employment, open source and education stay clearly labelled. */
+export const timeline: TimelineEntry[] = [
   {
-    id: 'icse',
-    when: String(icse.end),
-    title: 'ICSE completed',
-    place: icse.institution,
-    points: ['Science, Mathematics, Computer Applications'],
-    kind: 'education',
+    id: 'xerj',
+    kind: 'recognition',
+    when: monthYear(kornia.selectedAt),
+    title: `Kornia #${kornia.pullRequest} selected for the ${kornia.venue.name}`,
+    org: kornia.venue.name,
+    orgHref: 'https://hub.xerj.org/contributors/devtejasx',
+    points: [
+      'The merged fix was chosen as a worked example in a reference collection of real-world implementations, credited to its author and repository.',
+    ],
   },
   {
-    id: 'hsc',
-    when: String(hsc.end),
-    title: 'HSC completed',
-    place: hsc.institution,
-    points: ['Higher Secondary Certificate, Science'],
-    kind: 'education',
+    id: 'kornia',
+    kind: 'open-source',
+    when: monthYear(kornia.mergedAt),
+    title: 'Breaking-change fix merged into Kornia',
+    org: kornia.repo,
+    orgHref: `https://github.com/${kornia.repo}/pull/${kornia.pullRequest}`,
+    points: [
+      'Shape-changing augmentations now reject a per-sample gate with a clear ValueError instead of returning images that no longer match their labels; tests, docs and the audit tool updated to match.',
+    ],
+  },
+  {
+    id: '7xlabs',
+    kind: 'employment',
+    when: 'Aug 2026 – Present',
+    title: 'Backend Developer Intern',
+    org: '7XLabs',
+    orgHref: 'https://7xllabs.com',
+    points: [
+      'Backend systems for live client products, with Node.js, Next.js, TypeScript and Firebase.',
+    ],
+    showClients: true,
+  },
+  {
+    id: 'oss',
+    kind: 'open-source',
+    when: `${monthYear(firstMerge)} – Present`,
+    title: `${totalMergedPullRequests} merged pull requests across ${openSourceProjects.length} external projects`,
+    org: 'Upstream open source',
+    points: [
+      'Concurrency, memory-safety and correctness fixes reviewed and merged by each project’s maintainers.',
+      perProject,
+    ],
   },
   {
     id: 'btech',
-    when: String(university.start),
-    title: 'B.Tech CSE begins',
-    place: `${university.institution}, Bangalore`,
-    points: ['Computer Science and Engineering'],
     kind: 'education',
+    when: `${university.start} – ${university.end}`,
+    title: university.credential,
+    org: `${university.institution}, ${university.place}`,
+    points: [`Graduating ${university.end}. Coursework: ${university.coursework?.join(', ')}.`],
   },
   {
-    id: 'now',
-    when: 'Now',
-    title: 'Systems, backend and open source',
-    points: [
-      'Backend developer intern at 7XLabs: client LMS and billing systems',
-      '41 merged pull requests across 8 external open-source projects',
-      'Real-Time Chat Server in C++20, validated by 413 GoogleTest tests',
-      'Building DeployX, a self-service deployment platform (in progress)',
-    ],
-    kind: 'engineering',
-  },
-  {
-    id: 'graduation',
-    when: String(university.end),
-    title: 'B.Tech CSE completes',
-    place: university.institution,
-    points: ['End of the 2023–2027 programme'],
-    kind: 'future',
+    id: 'school',
+    kind: 'education',
+    when: `${icse.end} · ${hsc.end}`,
+    title: 'ICSE and Higher Secondary (Science)',
+    org: `${icse.institution} · ${hsc.institution}`,
+    points: [],
   },
 ]

@@ -12,12 +12,12 @@ import './ArchitectureView.css'
 const ArchitectureScene = lazy(() => import('../three/ArchitectureScene'))
 
 const colors: Record<string, string> = {
-  client: '#7cc4ff',
-  api: '#5b8cff',
-  service: '#8a7dff',
-  postgres: '#5b8cff',
-  redis: '#a678ff',
-  replica: '#7d8cff',
+  client: '#a8b8ff',
+  api: '#8fa8ff',
+  service: '#b4c4ff',
+  postgres: '#8fa8ff',
+  redis: '#9fb2ff',
+  replica: '#8fa8ff',
 }
 
 const canRun3D = () =>
@@ -26,15 +26,16 @@ const canRun3D = () =>
     new URLSearchParams(window.location.search).get('3d') === 'force')
 
 /**
- * Interactive architecture: a 3D scene on capable desktops, the SVG diagram
- * everywhere else (phones, no GPU, render failure), plus a toggle between the
- * two. The component list and explanation below work in both modes.
+ * Interactive architecture: the SVG diagram by default, with an optional 3D
+ * scene on capable desktops for diagrams that define 3D positions. The 3D code
+ * downloads only when the visitor asks for it.
  */
 export function ArchitectureView({ diagram }: { diagram: Diagram }) {
-  const [supported] = useState(canRun3D)
+  const has3D = diagram.nodes.every((n) => n.kind3d && n.pos3d)
+  const [supported] = useState(() => has3D && canRun3D())
   const wideEnough = useMediaQuery('(min-width: 768px)')
   const reduced = usePrefersReducedMotion()
-  const [mode, setMode] = useState<'3d' | '2d'>('3d')
+  const [mode, setMode] = useState<'3d' | '2d'>('2d')
   const [failed, setFailed] = useState(false)
   const [selected, setSelected] = useState(diagram.nodes[2]?.id ?? diagram.nodes[0].id)
   const [near, setNear] = useState(false)
@@ -49,10 +50,10 @@ export function ArchitectureView({ diagram }: { diagram: Diagram }) {
     () => ({
       nodes: diagram.nodes.map((n) => ({
         id: n.id,
-        kind: n.kind3d,
+        kind: n.kind3d!,
         label: n.label,
-        position: n.pos3d,
-        color: colors[n.kind3d],
+        position: n.pos3d!,
+        color: colors[n.kind3d!],
       })),
       edges: diagram.edges.map((e) => [e.from, e.to] as [string, string]),
     }),

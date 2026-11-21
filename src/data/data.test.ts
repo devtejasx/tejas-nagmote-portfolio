@@ -1,13 +1,19 @@
+/// <reference types="node" />
+import { existsSync, readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { openSourceProjects, totalMergedPullRequests } from './openSource'
+import { caseStudies } from './caseStudies'
 import { education } from './education'
 import { experience } from './experience'
+import { openSourceProjects, totalMergedPullRequests } from './openSource'
 import { prDetails, prKey } from './prDetails'
-import { links, stats } from './profile'
-import { projects } from './projects'
-import { skillCategories, skillEvidence } from './skills'
+import { links, proof } from './profile'
+import { caseStudyProjects, projects } from './projects'
 import { kornia } from './recognition'
+import { INTERNSHIP, skillCategories } from './skills'
 import { timeline } from './timeline'
+
+const root = resolve(__dirname, '../..')
 
 describe('open-source data matches GitHub', () => {
   it('counts 41 merged PRs across 8 projects', () => {
@@ -38,15 +44,13 @@ describe('open-source data matches GitHub', () => {
     }
   })
 
-  it('agrees with the headline stats', () => {
-    expect(stats.find((s) => s.label === 'Merged PRs')?.value).toBe(totalMergedPullRequests)
-    expect(stats.find((s) => s.label === 'Open-source projects')?.value).toBe(
-      openSourceProjects.length,
-    )
+  it('agrees with the hero proof strip', () => {
+    expect(proof[0].value).toBe(String(totalMergedPullRequests))
+    expect(proof[0].label).toContain(`${openSourceProjects.length} external`)
   })
 })
 
-describe('project diagrams', () => {
+describe('projects and case studies', () => {
   const withDiagrams = projects.flatMap((p) => (p.diagram ? [[p.id, p.diagram] as const] : []))
 
   it.each(withDiagrams)('%s edges reference real nodes', (_, d) => {
@@ -58,21 +62,47 @@ describe('project diagrams', () => {
     }
   })
 
-  it('features the chat server and shows its architecture', () => {
-    const featured = projects.filter((p) => p.tier === 'featured')
-    expect(featured.map((p) => p.id)).toEqual(['realtime-chat'])
-    expect(featured[0].diagram?.nodes.map((n) => n.id)).toEqual([
-      'clients',
-      'gateway',
-      'service',
-      'postgres',
-      'redis',
-      'replicas',
-    ])
+  it.each(withDiagrams)('%s nodes fit inside both diagram layouts', (_, d) => {
+    for (const n of d.nodes) {
+      expect(n.wide[0] - 58, n.id).toBeGreaterThanOrEqual(0)
+      expect(n.wide[0] + 58, n.id).toBeLessThanOrEqual(640)
+      expect(n.narrow[0] - 64, n.id).toBeGreaterThanOrEqual(0)
+      expect(n.narrow[0] + 64, n.id).toBeLessThanOrEqual(320)
+    }
   })
 
-  it('marks only DeployX as in progress', () => {
-    expect(projects.filter((p) => p.status === 'In Progress').map((p) => p.id)).toEqual(['deployx'])
+  it('features the chat server, DeployX and CodeCompass as case studies', () => {
+    expect(caseStudyProjects.map((p) => p.id)).toEqual([
+      'realtime-chat-server',
+      'deployx',
+      'codecompass',
+    ])
+    for (const p of caseStudyProjects) expect(p.highlights.length, p.id).toBe(3)
+  })
+
+  it('has one case study and one static page per featured project', () => {
+    expect(caseStudies.map((c) => c.projectId).sort()).toEqual(
+      caseStudyProjects.map((p) => p.id).sort(),
+    )
+    for (const p of caseStudyProjects) {
+      const page = resolve(root, 'projects', p.id, 'index.html')
+      expect(existsSync(page), page).toBe(true)
+      expect(readFileSync(page, 'utf8')).toContain(`data-project="${p.id}"`)
+    }
+  })
+
+  it('gives every case study its decisions, challenges and test layers', () => {
+    for (const c of caseStudies) {
+      expect(c.decisions.length, c.projectId).toBeGreaterThanOrEqual(4)
+      expect(c.challenges.length, c.projectId).toBeGreaterThanOrEqual(3)
+      expect(c.testing.layers.length, c.projectId).toBeGreaterThanOrEqual(3)
+      expect(c.performance?.conditions.length ?? 0, c.projectId).toBeGreaterThan(40)
+    }
+  })
+
+  it('keeps the chat server figures that the repository reports', () => {
+    const chat = caseStudies.find((c) => c.projectId === 'realtime-chat-server')!
+    expect(chat.facts.map((f) => f.value)).toEqual(['413', '9', '0', '9.7M'])
   })
 })
 
@@ -84,18 +114,31 @@ describe('links and skills', () => {
   })
 
   it('has no duplicate skills inside a category', () => {
-    for (const c of skillCategories) expect(new Set(c.skills).size).toBe(c.skills.length)
+    for (const c of skillCategories) {
+      const names = c.skills.map((s) => s.name)
+      expect(new Set(names).size).toBe(names.length)
+    }
+  })
+
+  it('only cites real projects, repositories or the internship as evidence', () => {
+    const known = new Set([
+      ...projects.map((p) => p.title),
+      ...openSourceProjects.map((p) => p.name),
+      INTERNSHIP,
+      '41 merged open-source PRs',
+    ])
+    for (const c of skillCategories)
+      for (const s of c.skills)
+        for (const w of s.evidence ?? []) expect(known, `${s.name} -> ${w}`).toContain(w)
   })
 })
 
-describe('education', () => {
+describe('education and experience', () => {
   it('lists university, HSC and ICSE, newest first', () => {
     expect(education.map((e) => e.end)).toEqual([2027, 2023, 2020])
     expect(education[0].institution).toBe('PES University')
   })
-})
 
-describe('experience', () => {
   it('lists the 7XLabs internship and its two clients, with https links', () => {
     expect(experience.map((e) => e.company)).toEqual(['7XLabs'])
     const [job] = experience
@@ -111,50 +154,10 @@ describe('experience', () => {
       ['~120 orders a day'],
     ])
   })
-})
 
-describe('impact stats', () => {
-  const statFor = (label: string) => stats.find((s) => s.label === label)?.value
-  const prsIn = (name: string) =>
-    openSourceProjects.find((p) => p.name === name)?.pullRequests.length
-
-  it('matches the per-project PR data', () => {
-    expect(statFor('ng-log PRs')).toBe(prsIn('ng-log'))
-    expect(statFor('google/benchmark PRs')).toBe(prsIn('google/benchmark'))
-  })
-
-  it('shows exactly the five resume figures', () => {
-    expect(stats.map((s) => s.value)).toEqual([41, 8, 413, 13, 7])
-  })
-})
-
-describe('skill evidence', () => {
-  const known = new Set([
-    ...projects.map((p) => p.title),
-    ...openSourceProjects.map((p) => p.name),
-    '41 merged open-source PRs',
-  ])
-
-  it('only points at real projects and repositories', () => {
-    for (const [skill, where] of Object.entries(skillEvidence)) {
-      expect(
-        skillCategories.some((c) => c.skills.includes(skill)),
-        skill,
-      ).toBe(true)
-      for (const w of where) expect(known, `${skill} -> ${w}`).toContain(w)
-    }
-  })
-})
-
-describe('timeline', () => {
-  it('uses only years from the education data, plus "Now"', () => {
-    const years = new Set(
-      education
-        .flatMap((e) => [e.start, e.end])
-        .filter(Boolean)
-        .map(String),
-    )
-    for (const stop of timeline) expect(stop.when === 'Now' || years.has(stop.when)).toBe(true)
+  it('labels 7XLabs as the only employment on the timeline', () => {
+    expect(timeline.filter((t) => t.kind === 'employment').map((t) => t.org)).toEqual(['7XLabs'])
+    expect(timeline.find((t) => t.id === 'oss')?.title).toContain(String(totalMergedPullRequests))
   })
 })
 
@@ -181,9 +184,9 @@ describe('recognition', () => {
     const merged = openSourceProjects.find((p) => p.repo === kornia.repo)?.pullRequests ?? []
     expect(merged.map((p) => p.number)).toContain(kornia.pullRequest)
     expect(kornia.commit).toMatch(/^[0-9a-f]{40}$/)
-    const links = kornia.links.map((l) => l.href)
-    expect(links).toContain(`https://github.com/${kornia.repo}/pull/${kornia.pullRequest}`)
-    expect(links).toContain(`https://github.com/${kornia.repo}/commit/${kornia.commit}`)
+    const hrefs = kornia.links.map((l) => l.href)
+    expect(hrefs).toContain(`https://github.com/${kornia.repo}/pull/${kornia.pullRequest}`)
+    expect(hrefs).toContain(`https://github.com/${kornia.repo}/commit/${kornia.commit}`)
   })
 
   it('uses https links only and keeps the XERJ figures', () => {

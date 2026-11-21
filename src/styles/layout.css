@@ -1,27 +1,11 @@
-main:focus {
-  outline: none;
-}
-
 .scroll-progress {
   position: fixed;
   inset: 0 0 auto;
   z-index: 60;
   height: 2px;
-  background: var(--gradient);
+  background: var(--accent);
   transform-origin: 0 50%;
   pointer-events: none;
-}
-
-/* Section dividers: a hairline that fades out at both ends. */
-.section + .section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: min(var(--content), calc(100% - var(--gutter) * 2));
-  height: 1px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
 }
 
 .section-error {
@@ -43,21 +27,56 @@ main:focus {
   justify-content: space-between;
   gap: 12px 24px;
   color: var(--text-dim);
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
-.footer__built {
-  font-size: 12px;
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
 }
 
-.footer__top {
+.footer__links a {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  transition: color 0.2s;
+  min-height: 32px;
+  transition: color 0.18s;
 }
 
-.footer__top:hover {
+.footer__links a:hover {
+  color: var(--text);
+}
+
+/* ----------------------------------------------------------- back to top */
+.to-top {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  box-shadow: var(--shadow-pop);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s,
+    transform 0.2s var(--ease-out),
+    color 0.18s;
+}
+
+.to-top.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.to-top:hover {
   color: var(--text);
 }

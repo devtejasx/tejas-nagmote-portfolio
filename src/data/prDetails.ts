@@ -234,7 +234,7 @@ export const prDetails: Record<string, PrDetail> = {
   },
 
   // coverport, MicroPython, PySTAC
-  'konflux-ci/coverport#113': {
+  'fullsend-ai/coverport#113': {
     kind: 'Testing',
     problem: 'The coverage-jira-tasks URL helpers had no unit tests.',
     fix: 'Add standard-library unittest coverage for the four helpers, including a regression guard, and run it in CI.',

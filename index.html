@@ -1,63 +1,93 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Tejas Nagmote | C++ Systems &amp; Backend Engineer</title>
+    <title>Tejas Nagmote · Software Engineer: C++, Backend &amp; Systems</title>
     <meta
       name="description"
-      content="Tejas Nagmote, C++ systems and backend engineer. Builds backend and distributed systems, with 41 merged pull requests across 8 external open-source projects including ng-log and google/benchmark."
+      content="Tejas Nagmote, software engineer and Computer Science undergraduate (B.Tech 2027) focused on C++, backend and systems programming. 41 merged open-source pull requests across 8 projects, and case studies of a C++20 chat server, a deployment platform and a sandboxed code runner."
     />
     <meta name="author" content="Tejas Nagmote" />
-    <meta name="theme-color" content="#05060a" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="dark light" />
     <link rel="canonical" href="%VITE_SITE_URL%" />
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.dataset.theme = 'light'
+          document.querySelector('meta[name="theme-color"]').content = '#fbfbfc'
+        }
+      } catch (e) {}
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <link rel="manifest" href="./site.webmanifest" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
     <meta property="og:site_name" content="Tejas Nagmote" />
-    <meta property="og:title" content="Tejas Nagmote | C++ Systems & Backend Engineer" />
+    <meta property="og:title" content="Tejas Nagmote · Software Engineer: C++, Backend & Systems" />
     <meta
       property="og:description"
-      content="C++ systems and backend engineering. 41 merged pull requests across 8 external open-source projects, including ng-log and google/benchmark."
+      content="C++, backend and systems engineering. 41 merged pull requests across 8 open-source projects, including ng-log, google/benchmark and Kornia."
     />
     <meta property="og:url" content="%VITE_SITE_URL%" />
     <meta property="og:image" content="%VITE_SITE_URL%og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Tejas Nagmote — C++ Systems & Backend Engineer" />
+    <meta
+      property="og:image:alt"
+      content="Tejas Nagmote: Engineering reliable software. Building systems that scale."
+    />
     <meta property="og:locale" content="en_IN" />
+    <meta property="profile:first_name" content="Tejas" />
+    <meta property="profile:last_name" content="Nagmote" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Tejas Nagmote | C++ Systems & Backend Engineer" />
+    <meta
+      name="twitter:title"
+      content="Tejas Nagmote · Software Engineer: C++, Backend & Systems"
+    />
     <meta
       name="twitter:description"
-      content="C++ systems and backend engineering. 41 merged pull requests across 8 external open-source projects."
+      content="C++, backend and systems engineering. 41 merged pull requests across 8 open-source projects."
     />
     <meta name="twitter:image" content="%VITE_SITE_URL%og-image.png" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Tejas Nagmote",
+        "@type": "ProfilePage",
         "url": "%VITE_SITE_URL%",
-        "jobTitle": "C++ Systems & Backend Engineer",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Bangalore",
-          "addressCountry": "IN"
-        },
-        "alumniOf": { "@type": "CollegeOrUniversity", "name": "PES University" },
-        "sameAs": [
-          "https://github.com/devtejasx",
-          "https://www.linkedin.com/in/tejas-nagmote-33592823a/",
-          "https://leetcode.com/u/Tejas_Nagmote/"
-        ]
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Tejas Nagmote",
+          "url": "%VITE_SITE_URL%",
+          "jobTitle": "Software Engineer",
+          "description": "Computer Science undergraduate focused on C++, backend engineering and systems programming; open-source contributor.",
+          "knowsAbout": [
+            "C++",
+            "Backend engineering",
+            "Systems programming",
+            "Distributed systems",
+            "PostgreSQL",
+            "Redis",
+            "Open source"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Bangalore",
+            "addressCountry": "IN"
+          },
+          "alumniOf": { "@type": "CollegeOrUniversity", "name": "PES University" },
+          "sameAs": [
+            "https://github.com/devtejasx",
+            "https://www.linkedin.com/in/tejas-nagmote-33592823a/",
+            "https://leetcode.com/u/Tejas_Nagmote/"
+          ]
+        }
       }
     </script>
   </head>
@@ -70,24 +100,25 @@
           margin: 15vh auto;
           padding: 0 20px;
           font-family: system-ui, sans-serif;
-          color: #eceef6;
+          color: #ededef;
+          background: #09090b;
           line-height: 1.6;
         "
       >
         <h1>Tejas Nagmote</h1>
-        <p>C++ Systems &amp; Backend Engineer · Bangalore, India</p>
+        <p>Software Engineer · C++, Backend &amp; Systems · Bangalore, India</p>
         <p>
-          Computer Science undergraduate at PES University focused on C++ systems and backend
-          engineering, with 41 merged pull requests across 8 external open-source projects.
+          Computer Science undergraduate at PES University (B.Tech, 2027) focused on C++, backend
+          engineering and systems programming, with 41 merged pull requests across 8 external
+          open-source projects.
         </p>
         <p>
-          <a href="mailto:tejasnagmote520@gmail.com" style="color: #9cb8ff">Email</a> ·
-          <a href="https://github.com/devtejasx" style="color: #9cb8ff">GitHub</a> ·
-          <a href="https://www.linkedin.com/in/tejas-nagmote-33592823a/" style="color: #9cb8ff"
+          <a href="mailto:tejasnagmote520@gmail.com" style="color: #8fa8ff">Email</a> ·
+          <a href="https://github.com/devtejasx" style="color: #8fa8ff">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/tejas-nagmote-33592823a/" style="color: #8fa8ff"
             >LinkedIn</a
           >
-          · <a href="https://leetcode.com/u/Tejas_Nagmote/" style="color: #9cb8ff">LeetCode</a> ·
-          <a href="./resume.pdf" style="color: #9cb8ff">Resume (PDF)</a>
+          · <a href="./resume.pdf" style="color: #8fa8ff">Resume (PDF)</a>
         </p>
       </main>
     </noscript>

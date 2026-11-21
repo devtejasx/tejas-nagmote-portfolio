@@ -1,12 +1,10 @@
+/** Home-page sections, in page order. The nav links to these. */
 export const sections = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'open-source', label: 'Open Source' },
-  { id: 'recognition', label: 'Publications' },
   { id: 'projects', label: 'Projects' },
+  { id: 'open-source', label: 'Open Source' },
+  { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
-  { id: 'education', label: 'Education' },
+  { id: 'activity', label: 'Activity' },
   { id: 'contact', label: 'Contact' },
 ] as const
 
