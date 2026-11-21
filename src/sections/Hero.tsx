@@ -1,87 +1,117 @@
-import { ArrowRight, Download, Mail } from 'lucide-react'
-import { GitHubIcon } from '../components/BrandIcon'
-import { MessagePath } from '../components/MessagePath'
-import { getLink, profile, proof } from '../data/profile'
-import { focusAreas } from '../data/skills'
+import { useRef } from 'react'
+import { m, type Variants } from 'motion/react'
+import { ArrowDown, ArrowRight, Download } from 'lucide-react'
+import { fadeUp, staggerChildren } from '../animations/variants'
+import { LinkIcon } from '../components/BrandIcon'
+import { ButtonLink } from '../components/Button'
+import { getLink, profile } from '../data/profile'
+import { HeroVisual } from '../three/HeroVisual'
+import { sceneDescription } from '../three/layout'
 import './Hero.css'
 
 const github = getLink('github')
+const linkedin = getLink('linkedin')
+
+const wordReveal: Variants = {
+  hidden: { y: '105%' },
+  visible: { y: '0%', transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
+}
+
+function RevealWord({ children, className }: { children: string; className?: string }) {
+  return (
+    <span className="hero__word-mask">
+      <m.span className={`hero__word ${className ?? ''}`} variants={wordReveal}>
+        {children}
+      </m.span>
+    </span>
+  )
+}
 
 export function Hero() {
+  const ref = useRef<HTMLElement>(null)
+  const [first, last] = profile.name.split(' ')
+
   return (
-    <section id="top" className="hero" aria-labelledby="hero-title">
-      <div className="grid-backdrop" aria-hidden="true" />
-      <div className="container hero__inner">
-        <div className="hero__copy">
-          <p className="hero__meta mono">
-            <span className="hero__dot" aria-hidden="true" />
-            B.Tech CSE · {profile.university} · Class of {profile.graduation}
-          </p>
+    <section id="home" ref={ref} className="hero" aria-labelledby="hero-title">
+      <div className="hero__backdrop" aria-hidden="true" />
+      <HeroVisual eventSource={ref} />
+      <p className="sr-only">{sceneDescription}</p>
 
-          <h1 id="hero-title" className="hero__title">
-            <span>{profile.headline[0]}</span> <span>{profile.headline[1]}</span>
-          </h1>
+      <div className="hero__content container">
+        <m.div
+          className="hero__copy"
+          variants={staggerChildren(0.12, 0.15)}
+          initial="hidden"
+          animate="visible"
+        >
+          <m.p className="hero__eyebrow mono" variants={fadeUp}>
+            <span className="hero__pulse" aria-hidden="true" />
+            {profile.location} · PES University
+          </m.p>
 
-          <p className="hero__intro">{profile.intro}</p>
+          <m.h1 id="hero-title" className="hero__title" variants={staggerChildren(0.08)}>
+            <RevealWord>{first}</RevealWord>{' '}
+            <RevealWord className="gradient-text">{last}</RevealWord>
+          </m.h1>
 
-          <div className="hero__actions">
-            <a
-              className="btn btn--primary"
+          <m.p className="hero__role" variants={fadeUp}>
+            {profile.role}
+          </m.p>
+
+          <m.p className="hero__lead" variants={fadeUp}>
+            {profile.headline}
+          </m.p>
+
+          <m.p className="hero__seeking" variants={fadeUp}>
+            <span className="hero__seeking-label mono">Open to</span>
+            {profile.seeking.map((role) => (
+              <span key={role} className="hero__seeking-role">
+                {role}
+              </span>
+            ))}
+            <span className="sr-only"> roles</span>
+          </m.p>
+
+          <m.div className="hero__actions" variants={fadeUp}>
+            <ButtonLink
+              href="#projects"
+              variant="primary"
+              icon={<ArrowRight size={18} aria-hidden="true" />}
+            >
+              View Projects
+            </ButtonLink>
+            <ButtonLink href={github.href} external icon={<LinkIcon id="github" size={18} />}>
+              GitHub
+            </ButtonLink>
+            <ButtonLink
               href={profile.resumePath}
               download={profile.resumeFileName}
+              icon={<Download size={18} aria-hidden="true" />}
             >
-              <Download size={16} aria-hidden="true" />
-              Download resume
-            </a>
-            <a className="btn" href="#projects">
-              Explore projects
-              <ArrowRight size={16} aria-hidden="true" />
-            </a>
-            <a
-              className="btn btn--ghost"
-              href={github.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <GitHubIcon size={16} />
-              GitHub
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-            <a className="btn btn--ghost" href="#contact">
-              <Mail size={16} aria-hidden="true" />
-              Contact
-            </a>
-          </div>
-
-          <div className="hero__focus">
-            <p className="hero__focus-label mono">Focus</p>
-            <ul className="badges" aria-label="Engineering focus areas">
-              {focusAreas.map((f) => (
-                <li key={f} className="badge">
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="hero__visual">
-          <MessagePath />
-        </div>
+              Resume
+            </ButtonLink>
+            <ButtonLink href={linkedin.href} external icon={<LinkIcon id="linkedin" size={18} />}>
+              LinkedIn
+            </ButtonLink>
+          </m.div>
+        </m.div>
       </div>
 
-      <div className="container">
-        <ul className="hero__proof" aria-label="Highlights">
-          {proof.map((p) => (
-            <li key={p.value}>
-              <a href={p.href} className="hero__proof-item">
-                <span className="hero__proof-value">{p.value}</span>
-                <span className="hero__proof-label">{p.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <m.p
+        className="hero__pipeline mono"
+        aria-hidden="true"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 1 }}
+      >
+        client <span>→</span> api <span>→</span> service <span>→</span> postgresql · redis{' '}
+        <span>→</span> replicas
+      </m.p>
+
+      <a href="#impact" className="hero__scroll">
+        <span>Scroll</span>
+        <ArrowDown size={16} aria-hidden="true" />
+      </a>
     </section>
   )
 }

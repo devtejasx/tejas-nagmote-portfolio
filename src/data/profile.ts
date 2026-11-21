@@ -1,10 +1,9 @@
-// Personal details. Facts here come from the resume (public/resume.pdf) and
-// the visitor-facing copy Tejas wrote for the hero.
+// Personal details, taken verbatim from the resume (public/resume.pdf).
 
 export interface ExternalLink {
   id: 'github' | 'linkedin' | 'leetcode' | 'email'
   label: string
-  /** What a screen reader hears, e.g. "GitHub profile". */
+  /** What a screen reader hears, e.g. "GitHub profile (devtejasx)". */
   description: string
   href: string
   handle: string
@@ -12,20 +11,30 @@ export interface ExternalLink {
 
 export const profile = {
   name: 'Tejas Nagmote',
-  role: 'Software Engineer · C++, Backend & Systems',
+  role: 'C++ Systems & Backend Engineer',
   location: 'Bangalore, India',
   email: 'tejasnagmote520@gmail.com',
-  university: 'PES University',
-  degree: 'B.Tech, Computer Science and Engineering',
-  graduation: 2027,
-  headline: ['Engineering Reliable Software.', 'Building Systems That Scale.'],
-  intro:
-    'I’m Tejas Nagmote, a Computer Science undergraduate focused on C++, backend engineering and systems programming. I enjoy solving complex engineering problems and contributing to real-world software projects.',
-  objective:
-    'Looking for software engineering internships and graduate roles at product companies.',
+  spokenLanguages: ['English', 'Hindi', 'Marathi'],
+  /** Hero one-liner, in Tejas's own words. */
+  headline:
+    'I build reliable backend systems, distributed services, and contribute to real-world C++ open-source projects.',
+  /** Roles Tejas is looking for, shown in the hero and About. */
+  seeking: ['SDE', 'Backend', 'Systems', 'C++', 'Distributed systems'],
+  /** Resume summary, split into paragraphs for the About section. */
+  summary: [
+    'Computer Science undergraduate focused on C++ systems and backend engineering: backend developer intern at 7XLabs, with 41 merged pull requests across 8 external open-source projects.',
+    'Experienced in debugging concurrency, memory-safety, and correctness bugs in widely used C++ codebases, and in building distributed backends with REST/WebSocket APIs, PostgreSQL, Redis, Docker, and CI/CD.',
+  ],
+  focusAreas: [
+    'Systems engineering',
+    'Backend engineering',
+    'Open-source contribution',
+    'Distributed systems',
+    'Concurrency',
+    'Memory safety',
+  ],
   resumePath: 'resume.pdf',
   resumeFileName: 'Tejas_Nagmote_Resume.pdf',
-  githubUser: 'devtejasx',
 } as const
 
 export const links: ExternalLink[] = [
@@ -65,25 +74,35 @@ export function getLink(id: ExternalLink['id']): ExternalLink {
   return link
 }
 
-export interface Proof {
-  value: string
+export interface Stat {
+  value: number
   label: string
-  /** Section anchor or relative page path. */
-  href: string
+  context: string
 }
 
-/** The hero's proof strip: verified facts, each linking to where it is shown in full. */
-export const proof: Proof[] = [
-  { value: '41', label: 'merged PRs across 8 external open-source projects', href: '#open-source' },
+/** The Impact section. PR figures match pullRequests.ts. */
+export const stats: Stat[] = [
+  { value: 41, label: 'Merged PRs', context: 'Reviewed and merged by external maintainers' },
   {
-    value: 'Kornia #5473',
-    label: 'selected for the XERJ Corpus Hub',
-    href: '#kornia',
+    value: 8,
+    label: 'Open-source projects',
+    context: 'Upstream repositories, external organizations',
   },
+  { value: 413, label: 'GoogleTest tests', context: 'Real-Time Chat Server, in GitHub Actions CI' },
+  { value: 13, label: 'ng-log PRs', context: "Successor to Google's glog" },
+  { value: 7, label: 'google/benchmark PRs', context: "Google's C++ microbenchmark library" },
+]
+
+/** The 15-second summary for recruiters, shown in About. */
+export const atAGlance: { key: string; value: string }[] = [
+  { key: 'role', value: 'C++ Systems & Backend Engineer' },
+  { key: 'builds', value: 'Backend and distributed systems' },
+  { key: 'experience', value: 'Backend developer intern at 7XLabs (since Aug 2026)' },
+  { key: 'differentiator', value: '41 merged PRs across 8 external open-source projects' },
+  { key: 'featured', value: 'Real-Time C++ Chat Server' },
+  { key: 'building', value: 'DeployX, a self-service deployment platform' },
   {
-    value: '413',
-    label: 'GoogleTest tests behind the C++20 chat server',
-    href: 'projects/realtime-chat-server/',
+    key: 'depth',
+    value: 'C++, concurrency, memory safety, distributed systems, PostgreSQL, Redis, Docker, AWS',
   },
-  { value: '7XLabs', label: 'backend developer intern since Aug 2026', href: '#experience' },
 ]

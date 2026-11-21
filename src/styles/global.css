@@ -1,92 +1,40 @@
-/* ---------------------------------------------------------------- tokens
-   One accent, neutral greys, two themes. Dark is the default; the light theme
-   is chosen by the visitor (stored) or by their OS when nothing is stored.
-   Every colour in the site should come from here. */
-:root,
-:root[data-theme='dark'] {
+/* ---------------------------------------------------------------- tokens */
+:root {
   color-scheme: dark;
 
-  --bg: #09090b;
-  --bg-subtle: #0d0d10;
-  --surface: #111114;
-  --surface-2: #17171b;
-  --surface-hover: #1c1c21;
-  --border: #232329;
-  --border-strong: #34343c;
+  --bg: #05060a;
+  --bg-raised: #0a0c13;
+  --surface: rgb(255 255 255 / 0.028);
+  --surface-hover: rgb(255 255 255 / 0.05);
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.16);
 
-  --text: #ededef;
-  --text-muted: #a8a8b3;
-  --text-dim: #8a8a96;
+  --text: #eceef6;
+  --text-muted: #a3a9bc;
+  --text-dim: #80879c;
 
-  --accent: #8fa8ff;
-  --accent-strong: #b4c4ff;
-  --accent-ink: #09090b;
-  --accent-soft: rgb(143 168 255 / 0.1);
-  --accent-border: rgb(143 168 255 / 0.32);
+  --blue: #5b8cff;
+  --violet: #9d6bff;
+  --cyan: #4fd1ff;
+  --warn: #ff9466;
+  --ok: #5fe3a1;
+  --gradient: linear-gradient(115deg, var(--blue) 0%, var(--violet) 100%);
+  --glow-blue: 0 0 32px rgb(91 140 255 / 0.28);
 
-  --ok: #5ad69a;
-  --ok-soft: rgb(90 214 154 / 0.1);
-  --warn: #f0b45a;
-  --warn-soft: rgb(240 180 90 / 0.1);
-  --danger: #ff8a8a;
-
-  --grid-line: rgb(255 255 255 / 0.035);
-  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -18px rgb(0 0 0 / 0.8);
-  --shadow-pop: 0 18px 50px -20px rgb(0 0 0 / 0.9);
-}
-
-:root[data-theme='light'] {
-  color-scheme: light;
-
-  --bg: #fbfbfc;
-  --bg-subtle: #f4f4f6;
-  --surface: #ffffff;
-  --surface-2: #f6f6f8;
-  --surface-hover: #f0f0f3;
-  --border: #e3e3e8;
-  --border-strong: #cfcfd7;
-
-  --text: #111114;
-  --text-muted: #4f4f5a;
-  --text-dim: #63636f;
-
-  --accent: #3150d0;
-  --accent-strong: #2440b4;
-  --accent-ink: #ffffff;
-  --accent-soft: rgb(49 80 208 / 0.07);
-  --accent-border: rgb(49 80 208 / 0.28);
-
-  --ok: #157a4a;
-  --ok-soft: rgb(21 122 74 / 0.08);
-  --warn: #9a5b00;
-  --warn-soft: rgb(154 91 0 / 0.08);
-  --danger: #b42318;
-
-  --grid-line: rgb(17 17 20 / 0.045);
-  --shadow-card: 0 1px 2px rgb(17 17 20 / 0.04), 0 8px 24px -16px rgb(17 17 20 / 0.18);
-  --shadow-pop: 0 18px 40px -20px rgb(17 17 20 / 0.3);
-}
-
-:root {
-  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Consolas, monospace;
 
-  --radius-xs: 6px;
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
 
   --gutter: clamp(16px, 4vw, 40px);
-  --content: 1120px;
-  --nav-height: 64px;
-  --section-space: clamp(80px, 10vw, 128px);
+  --content: 1180px;
+  --nav-height: 68px;
+  --section-space: clamp(88px, 12vw, 152px);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Cross-document view transitions between the home page and case studies. */
-@view-transition {
-  navigation: auto;
 }
 
 /* ------------------------------------------------------------------ base */
@@ -98,10 +46,9 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-height) + 16px);
+  scroll-padding-top: calc(var(--nav-height) + 8px);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--bg);
 }
 
 body {
@@ -109,13 +56,26 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.65;
-  font-feature-settings: 'cv11', 'ss01';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Page-wide ambient backdrop: faint grid fading out from the top. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
 }
 
 h1,
@@ -123,9 +83,10 @@ h2,
 h3,
 h4 {
   margin: 0;
+  font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
@@ -155,35 +116,19 @@ button {
   cursor: pointer;
 }
 
-img,
 svg {
-  display: block;
   flex-shrink: 0;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-code {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-}
-
 ::selection {
-  background: var(--accent-soft);
-  color: var(--text);
+  background: rgb(91 140 255 / 0.35);
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--cyan);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 /* ------------------------------------------------------------- utilities */
@@ -199,10 +144,6 @@ code {
   padding-block: var(--section-space);
 }
 
-.section--divided {
-  border-top: 1px solid var(--border);
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -215,33 +156,23 @@ code {
   border: 0;
 }
 
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .mono {
   font-family: var(--font-mono);
 }
 
-.muted {
-  color: var(--text-muted);
-}
-
-/* The one card surface used across the site. */
-.card {
-  background: var(--surface);
+/* Translucent card surface. No backdrop-filter: over this near-flat background
+   it adds GPU cost without a visible difference. */
+.glass {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.015));
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
-}
-
-/* A faint engineering grid, fading out from the top edge of its box. */
-.grid-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 100%);
 }
 
 .skip-link {
@@ -262,10 +193,6 @@ code {
   transform: translateY(0);
 }
 
-main:focus {
-  outline: none;
-}
-
 /* ---------------------------------------------------------------- motion */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -278,9 +205,5 @@ main:focus {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
-  }
-
-  @view-transition {
-    navigation: none;
   }
 }

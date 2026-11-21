@@ -5,7 +5,7 @@ import { LabelContext, type LabelApi } from './labelContext'
 
 /*
  * Scene labels are plain DOM elements rendered outside the <Canvas> by
- * the architecture view. Each frame, the projector maps registered 3D anchors to screen
+ * HeroVisual. Each frame, the projector maps registered 3D anchors to screen
  * space and moves the matching element with a transform. This avoids one
  * React root per label (drei's <Html>) and never re-renders React.
  */

@@ -8,52 +8,47 @@
   justify-self: end;
   display: inline-flex;
   padding: 3px;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   border: 1px solid var(--border);
-  background: var(--bg-subtle);
+  background: rgb(0 0 0 / 0.3);
 }
 
 .arch3d__toggle button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 32px;
-  padding: 0 12px;
-  border-radius: var(--radius-xs);
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
   color: var(--text-muted);
   font-size: 13px;
   font-weight: 500;
 }
 
 .arch3d__toggle button[aria-pressed='true'] {
-  color: var(--text);
-  background: var(--surface-hover);
+  color: #fff;
+  background: rgb(91 140 255 / 0.2);
 }
 
 .arch3d__stage {
   position: relative;
-  height: clamp(340px, 42vw, 440px);
+  height: clamp(340px, 42vw, 460px);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: #07080c;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgb(91 140 255 / 0.1), transparent 65%), rgb(3 4 8 / 0.6);
   overflow: hidden;
 }
 
 .arch3d__canvas {
-  animation: canvas-in 0.6s var(--ease-out) both;
-}
-
-@keyframes canvas-in {
-  from {
-    opacity: 0;
-  }
+  animation: canvas-in 1s var(--ease-out) both;
 }
 
 .arch3d__hint {
   position: absolute;
   left: 14px;
   bottom: 12px;
-  color: #8a8a96;
+  color: var(--text-dim);
   font-size: 11px;
   pointer-events: none;
 }
@@ -61,48 +56,11 @@
 .arch3d__band {
   padding: 10px 14px;
   border-radius: var(--radius-sm);
-  border: 1px dashed var(--border-strong);
-  background: var(--bg-subtle);
-  color: var(--text-muted);
+  border: 1px dashed rgb(157 107 255 / 0.35);
+  background: rgb(157 107 255 / 0.06);
+  color: #cbb6ff;
   font-size: 12px;
   text-align: center;
-}
-
-.scene-labels {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.scene-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 2px 8px;
-  border-radius: 6px;
-  background: rgb(9 9 11 / 0.85);
-  border: 1px solid #34343c;
-  color: #a8a8b3;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  white-space: nowrap;
-  user-select: none;
-  opacity: 0;
-  will-change: transform;
-  transition:
-    opacity 0.4s,
-    color 0.2s,
-    border-color 0.2s;
-}
-
-.scene-label[data-ready='true'] {
-  opacity: 1;
-}
-
-.scene-label.is-active {
-  color: #ededef;
-  border-color: #8fa8ff;
 }
 
 /* ------------------------------------------------------------ loader */
@@ -113,16 +71,16 @@
   place-content: center;
   justify-items: center;
   gap: 12px;
-  color: #8a8a96;
+  color: var(--text-dim);
   pointer-events: none;
 }
 
 .scene-loader__ring {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  border: 2px solid #34343c;
-  border-top-color: #8fa8ff;
+  border: 2px solid rgb(91 140 255 / 0.2);
+  border-top-color: var(--blue);
   animation: spin 0.9s linear infinite;
 }
 

@@ -58,7 +58,7 @@ export const PrExplorer = forwardRef<HTMLDivElement, PrExplorerProps>(function P
   const detail = current ? prDetails[prKey(project.repo, current.number)] : undefined
 
   return (
-    <div ref={ref} className="explorer card" tabIndex={-1} aria-label="Pull request explorer">
+    <div ref={ref} className="explorer glass" tabIndex={-1} aria-label="Pull request explorer">
       <ol className="explorer__trail mono" aria-label="Current selection">
         <li>{project.name}</li>
         <li aria-hidden="true">
