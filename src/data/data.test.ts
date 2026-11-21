@@ -5,7 +5,7 @@ import { experience } from './experience'
 import { prDetails, prKey } from './prDetails'
 import { links, stats } from './profile'
 import { projects } from './projects'
-import { skillCategories, skillEvidence } from './skills'
+import { INTERNSHIP, skillCategories, skillEvidence } from './skills'
 import { kornia } from './recognition'
 import { timeline } from './timeline'
 
@@ -128,10 +128,25 @@ describe('impact stats', () => {
   })
 })
 
+describe('skills', () => {
+  it("uses the resume's seven skill groups", () => {
+    expect(skillCategories.map((c) => c.title)).toEqual([
+      'Systems & OS',
+      'Backend & Databases',
+      'Languages',
+      'Networking',
+      'Embedded',
+      'CS Fundamentals',
+      'Tools & DevOps',
+    ])
+  })
+})
+
 describe('skill evidence', () => {
   const known = new Set([
     ...projects.map((p) => p.title),
     ...openSourceProjects.map((p) => p.name),
+    INTERNSHIP,
     '41 merged open-source PRs',
   ])
 

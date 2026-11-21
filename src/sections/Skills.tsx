@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
 import {
   BookOpen,
-  Cloud,
+  Braces,
+  CircuitBoard,
   Cpu,
-  Database,
-  FlaskConical,
   Network,
   Server,
+  Wrench,
   type LucideIcon,
 } from 'lucide-react'
 import { fadeUp, staggerChildren } from '../animations/variants'
@@ -19,14 +19,14 @@ import './Skills.css'
 const icons: Record<string, LucideIcon> = {
   systems: Cpu,
   backend: Server,
-  distributed: Network,
-  databases: Database,
-  cloud: Cloud,
-  testing: FlaskConical,
+  languages: Braces,
+  networking: Network,
+  embedded: CircuitBoard,
   fundamentals: BookOpen,
+  tools: Wrench,
 }
 
-const wide = new Set(['systems', 'backend', 'fundamentals'])
+const wide = new Set(['systems', 'backend', 'tools'])
 
 /** Where on the page each piece of evidence lives. */
 const evidenceTarget = (name: string) => {
@@ -37,6 +37,11 @@ const evidenceTarget = (name: string) => {
       return '#project-deployx'
     case 'REST API Testing Suite':
       return '#project-api-testing'
+    case 'CodeCompass':
+    case 'ARISE — Discipline Quest':
+      return '#projects'
+    case '7XLabs internship':
+      return '#experience'
     default:
       return '#open-source'
   }
