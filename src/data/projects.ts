@@ -1,5 +1,5 @@
 // The first three projects are the resume's "Projects" block, in its own
-// words. CodeCompass and ARISE come from their repositories' READMEs.
+// words. The socket server and CodeCompass come from their repositories' READMEs.
 
 import type { NodeKind } from '../three/layout'
 
@@ -250,6 +250,39 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: 'socket-server',
+    title: 'Load-Balanced C++ Socket Server',
+    tagline: 'Raw POSIX sockets behind an Nginx round-robin load balancer',
+    tier: 'supporting',
+    repo: 'https://github.com/devtejasx/cc-lab_6',
+    tech: ['C++', 'POSIX sockets', 'Linux', 'Docker', 'Nginx', 'Jenkins'],
+    summary:
+      'An HTTP/1.1 server written on raw POSIX TCP sockets with no framework, run as two identical containers behind an Nginx load balancer and deployed by a Jenkins pipeline.',
+    bullets: [
+      'Wrote an HTTP/1.1 server on raw POSIX TCP sockets (socket, bind, listen, accept, recv/send) with no framework; it drains each request before replying, so clients never see a connection reset.',
+      'Load-balanced two identical backend containers behind an Nginx upstream round-robin reverse proxy on a shared Docker network; each reply names its container (gethostname()), so request distribution is observable from the client.',
+      'Automated deployment with an idempotent 3-stage Jenkins declarative pipeline: build image, run both backends, start and reload Nginx; built a custom Jenkins agent image that drives Docker through the host socket.',
+    ],
+    story: [
+      {
+        label: 'Server',
+        text: 'A C++ HTTP/1.1 server on raw POSIX sockets (socket, bind, listen, accept, recv/send). It reads the whole request before replying, so clients never see a connection reset.',
+      },
+      {
+        label: 'Load balancing',
+        text: 'Two identical backend containers sit behind an Nginx upstream round-robin proxy on a shared Docker network.',
+      },
+      {
+        label: 'Observable',
+        text: 'Each reply names the container that served it (gethostname()), so the round-robin is visible from the client.',
+      },
+      {
+        label: 'Deployment',
+        text: 'An idempotent 3-stage Jenkins pipeline builds the image, runs both backends, and starts and reloads Nginx, from a custom agent image that drives Docker through the host socket.',
+      },
+    ],
+  },
+  {
     id: 'codecompass',
     title: 'CodeCompass',
     tagline: 'Guided learning platform for beginners in tech',
@@ -259,18 +292,6 @@ export const projects: Project[] = [
     tech: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Prisma', 'Auth.js', 'Docker'],
     summary:
       'Helps beginners choose a tech career and shows what to learn next. Its coding practice runs every submission in a throwaway, network-less container, so the app never executes learner code itself.',
-    bullets: [],
-  },
-  {
-    id: 'arise',
-    title: 'ARISE — Discipline Quest',
-    tagline: 'Gamified task and habit tracker (Daily-Task-manager)',
-    tier: 'more',
-    repo: 'https://github.com/devtejasx/Daily-Task-manager',
-    live: 'https://daily-task-manager-frontend-kappa.vercel.app',
-    tech: ['React 18', 'Vite', 'Firebase', 'Firestore', 'PWA', 'Vitest'],
-    summary:
-      'Turns tasks into XP and ranks, and rewards consistency over perfection. Firestore cloud sync with offline persistence, as an installable PWA.',
     bullets: [],
   },
 ]

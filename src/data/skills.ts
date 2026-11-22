@@ -115,7 +115,7 @@ const CHAT = 'Real-Time Chat Server'
 const DEPLOYX = 'DeployX'
 const API_SUITE = 'REST API Testing Suite'
 const CODECOMPASS = 'CodeCompass'
-const ARISE = 'ARISE — Discipline Quest'
+const SOCKET = 'Load-Balanced C++ Socket Server'
 export const INTERNSHIP = '7XLabs internship'
 
 /**
@@ -125,7 +125,7 @@ export const INTERNSHIP = '7XLabs internship'
  */
 export const skillEvidence: Record<string, string[]> = {
   // Systems & OS
-  Linux: [CHAT],
+  Linux: [CHAT, SOCKET],
   Multithreading: ['ng-log'],
   Synchronization: ['ng-log', 'google/benchmark'],
   'Thread Safety': ['ng-log', 'google/benchmark'],
@@ -137,7 +137,7 @@ export const skillEvidence: Record<string, string[]> = {
   'Node.js': [DEPLOYX, API_SUITE, INTERNSHIP],
   'Express.js': [DEPLOYX],
   'Next.js': [CODECOMPASS, INTERNSHIP],
-  Firebase: [ARISE, INTERNSHIP],
+  Firebase: [INTERNSHIP],
   'REST APIs': [CHAT, DEPLOYX, API_SUITE],
   'API Design': [CHAT],
   'JWT Authentication': [CHAT],
@@ -151,9 +151,10 @@ export const skillEvidence: Record<string, string[]> = {
   'JavaScript (ES6+)': [DEPLOYX],
   // Networking
   HTTP: [CHAT],
+  'POSIX sockets': [SOCKET],
   WebSockets: [CHAT],
   'Client–server design': [CHAT],
-  'Nginx load balancing': [CHAT],
+  'Nginx load balancing': [CHAT, SOCKET],
   'Redis Pub/Sub': [CHAT],
   // Embedded
   'MicroPython (C) on ESP32': ['MicroPython'],
@@ -163,11 +164,12 @@ export const skillEvidence: Record<string, string[]> = {
   'clang-tidy': [CHAT, 'D2MOO'],
   CMake: [CHAT, 'ng-log'],
   GoogleTest: [CHAT],
-  Docker: [CHAT, DEPLOYX, API_SUITE],
+  Docker: [CHAT, DEPLOYX, API_SUITE, SOCKET],
   'GitHub Actions': [CHAT, DEPLOYX, API_SUITE],
   Prometheus: [CHAT],
   Observability: [CHAT],
   'Distributed Tracing': [CHAT],
+  Jenkins: [SOCKET],
   Postman: [API_SUITE],
   Git: ['41 merged open-source PRs'],
   GitHub: ['41 merged open-source PRs'],

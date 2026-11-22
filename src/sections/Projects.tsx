@@ -207,8 +207,8 @@ export function Projects() {
           title="Things I've built."
         >
           <p>
-            A distributed C++ backend, a deployment platform in progress, and the testing setup
-            behind them. Select any component to see how it works.
+            A distributed C++ backend, a deployment platform in progress, the testing setup behind
+            them, and a load-balanced C++ socket server. Select any component to see how it works.
           </p>
         </SectionHeading>
 
@@ -221,6 +221,9 @@ export function Projects() {
           </Reveal>
           <Reveal>
             <Supporting project={projectById('api-testing')} />
+          </Reveal>
+          <Reveal>
+            <Supporting project={projectById('socket-server')} />
           </Reveal>
           {more.length > 0 && (
             <Reveal className="projects__more">

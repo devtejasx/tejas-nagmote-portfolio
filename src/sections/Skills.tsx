@@ -37,8 +37,9 @@ const evidenceTarget = (name: string) => {
       return '#project-deployx'
     case 'REST API Testing Suite':
       return '#project-api-testing'
+    case 'Load-Balanced C++ Socket Server':
+      return '#project-socket-server'
     case 'CodeCompass':
-    case 'ARISE — Discipline Quest':
       return '#projects'
     case '7XLabs internship':
       return '#experience'

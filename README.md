@@ -15,8 +15,8 @@ work rather than decoration: the hero is the chat server's message path, ending 
 events out to other replicas.
 
 Content comes from the resume in [`public/resume.pdf`](public/resume.pdf). The pull-request
-explanations are paraphrased from each PR's own description on GitHub, and the CodeCompass and
-ARISE cards from those repositories' READMEs.
+explanations are paraphrased from each PR's own description on GitHub, and the socket server and
+CodeCompass cards from those repositories' READMEs.
 
 ## Sections
 
