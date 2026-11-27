@@ -79,7 +79,10 @@ describe('project diagrams', () => {
 describe('links and skills', () => {
   it('uses https or mailto links only', () => {
     for (const l of links) expect(l.href).toMatch(/^(https:\/\/|mailto:)/)
-    for (const p of projects) expect(p.repo).toMatch(/^https:\/\/github\.com\/devtejasx\//)
+    for (const p of projects) {
+      if (p.repo) expect(p.repo).toMatch(/^https:\/\/github\.com\/devtejasx\//)
+      else expect(p.privateNote, `${p.id} needs a repo or a private note`).toBeTruthy()
+    }
     for (const p of projects) if (p.live) expect(p.live).toMatch(/^https:\/\//)
   })
 

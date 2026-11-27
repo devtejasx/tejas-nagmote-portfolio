@@ -20,16 +20,16 @@ CodeCompass cards from those repositories' READMEs.
 
 ## Sections
 
-| Section            | What it shows                                                                                               |
-| ------------------ | ----------------------------------------------------------------------------------------------------------- |
-| Hero               | Role, one-line pitch, roles of interest, and a 3D distributed-system scene                                  |
-| Impact             | 41 merged PRs · 8 projects · 413 GoogleTest tests · 13 ng-log PRs · 7 google/benchmark PRs                  |
-| About              | Short summary and an at-a-glance card: role, focus, differentiator, featured and current project            |
-| Open Source        | Contribution graph, featured ng-log and google/benchmark cards, and a project → PR → problem → fix explorer |
-| Projects           | Real-Time Chat Server (3D architecture), DeployX (animated pipeline, in progress), REST API Testing Suite   |
-| Skills             | Seven skill clusters; selecting a skill shows where it is used on the page                                  |
-| Timeline           | ICSE 2020 · HSC 2023 · B.Tech 2023 · current work · 2027                                                    |
-| Education, Contact | The B.Tech, then email, GitHub, LinkedIn, LeetCode and the resume                                           |
+| Section            | What it shows                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Hero               | Role, one-line pitch, roles of interest, and a 3D distributed-system scene                                         |
+| Impact             | 41 merged PRs · 8 projects · 413 GoogleTest tests · 13 ng-log PRs · 7 google/benchmark PRs                         |
+| About              | Short summary and an at-a-glance card: role, focus, differentiator, featured and current project                   |
+| Open Source        | Contribution graph, featured ng-log and google/benchmark cards, and a project → PR → problem → fix explorer        |
+| Projects           | Real-Time Chat Server (3D architecture), DeployX (animated pipeline, in progress), Rakshak, REST API Testing Suite |
+| Skills             | Seven skill clusters; selecting a skill shows where it is used on the page                                         |
+| Timeline           | ICSE 2020 · HSC 2023 · B.Tech 2023 · current work · 2027                                                           |
+| Education, Contact | The B.Tech, then email, GitHub, LinkedIn, LeetCode and the resume                                                  |
 
 ## Screenshots
 

@@ -46,7 +46,10 @@ export interface Project {
   /** featured: the main project; major: full section; supporting / more: smaller cards. */
   tier: 'featured' | 'major' | 'supporting' | 'more'
   status?: 'In Progress'
-  repo: string
+  /** Public source. Left out when the repository is private. */
+  repo?: string
+  /** Shown instead of the source link when there is no public repository. */
+  privateNote?: string
   /** Deployed demo, when there is one. */
   live?: string
   tech: string[]
@@ -218,6 +221,40 @@ export const projects: Project[] = [
       'Deployment history',
       'Real-time logs',
       'Application status',
+    ],
+  },
+  {
+    id: 'rakshak',
+    title: 'Rakshak — AI Voice Safety Call',
+    tagline: 'Talkdesk AI Hackday, Nov 2026 · team of 3',
+    tier: 'supporting',
+    privateNote: 'Hackathon team repository is private',
+    tech: ['Talkdesk AI Agents', 'MCP', 'Studio flows', 'Node.js', 'REST webhooks', 'Render'],
+    summary:
+      'Holds a risky bank transfer and phones the customer before a “digital arrest” scam takes the money. My part: telephony and voice-agent integration, and the bank app.',
+    bullets: [
+      'Wired the LLM voice agent into live calls: bought the caller number, built the outbound SafetyCall flow (25 s ring; answered → AI agent, busy/no answer → exit) and published the agent orchestration that calls the backend’s tools over MCP.',
+      'Built the FamilyAlert IVR campaign: calls the customer’s trusted contact, plays a TTS prompt, and writes the keypress back to the backend (POST /api/family/confirm) through a Studio Execute Action, which releases or blocks the held transfer.',
+      'Ran the first live call on real phones (27 MCP requests). An honest customer’s case ended “blocked”; I traced it through the tool-call timeline to an escalation tool that blocked money on any verdict and filed the fix (shipped the same day).',
+      'Rebuilt the customer bank app (+415/−128 lines): payee search, confirm sheet, live hold/release status.',
+    ],
+    story: [
+      {
+        label: 'SafetyCall',
+        text: 'Bought the caller number and built the outbound flow: a 25 s ring, then the AI agent if answered, or exit on busy/no answer. Published the agent orchestration that calls the backend’s tools over MCP.',
+      },
+      {
+        label: 'FamilyAlert',
+        text: 'An IVR campaign calls the customer’s trusted contact, plays a TTS prompt, and writes the keypress back to POST /api/family/confirm through a Studio Execute Action, which releases or blocks the held transfer.',
+      },
+      {
+        label: 'First live call',
+        text: 'Ran it on real phones (27 MCP requests). An honest customer’s case ended “blocked”; the tool-call timeline led to an escalation tool that blocked money on any verdict. Filed the fix, shipped the same day.',
+      },
+      {
+        label: 'Bank app',
+        text: 'Rebuilt the customer bank app (+415/−128 lines): payee search, confirm sheet, live hold/release status.',
+      },
     ],
   },
   {

@@ -39,6 +39,8 @@ const evidenceTarget = (name: string) => {
       return '#project-api-testing'
     case 'Load-Balanced C++ Socket Server':
       return '#project-socket-server'
+    case 'Rakshak — AI Voice Safety Call':
+      return '#project-rakshak'
     case 'CodeCompass':
       return '#projects'
     case '7XLabs internship':

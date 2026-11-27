@@ -116,6 +116,7 @@ const DEPLOYX = 'DeployX'
 const API_SUITE = 'REST API Testing Suite'
 const CODECOMPASS = 'CodeCompass'
 const SOCKET = 'Load-Balanced C++ Socket Server'
+const RAKSHAK = 'Rakshak — AI Voice Safety Call'
 export const INTERNSHIP = '7XLabs internship'
 
 /**
@@ -138,7 +139,7 @@ export const skillEvidence: Record<string, string[]> = {
   'Express.js': [DEPLOYX],
   'Next.js': [CODECOMPASS, INTERNSHIP],
   Firebase: [INTERNSHIP],
-  'REST APIs': [CHAT, DEPLOYX, API_SUITE],
+  'REST APIs': [CHAT, DEPLOYX, API_SUITE, RAKSHAK],
   'API Design': [CHAT],
   'JWT Authentication': [CHAT],
   PostgreSQL: [CHAT, DEPLOYX, API_SUITE],

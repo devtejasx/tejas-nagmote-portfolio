@@ -1,6 +1,6 @@
 import { useId, useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
-import { ArrowUpRight, ChevronDown, Star } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, Lock, Star } from 'lucide-react'
 import { ArchitectureView } from '../components/ArchitectureView'
 import { Badges } from '../components/Badges'
 import { GitHubIcon } from '../components/BrandIcon'
@@ -13,6 +13,13 @@ import { projectById, projects, type Project } from '../data/projects'
 import './Projects.css'
 
 function SourceLink({ project }: { project: Project }) {
+  if (!project.repo) {
+    return project.privateNote ? (
+      <p className="project__private mono">
+        <Lock size={14} aria-hidden="true" /> {project.privateNote}
+      </p>
+    ) : null
+  }
   return (
     <ButtonLink href={project.repo} external icon={<GitHubIcon size={18} />}>
       GitHub
@@ -177,9 +184,11 @@ function Compact({ project }: { project: Project }) {
       <p className="project__summary">{project.summary}</p>
       <Badges items={project.tech} label={`${project.title} technologies`} />
       <div className="project__actions">
-        <ButtonLink href={project.repo} external variant="ghost" icon={<GitHubIcon size={18} />}>
-          Source
-        </ButtonLink>
+        {project.repo && (
+          <ButtonLink href={project.repo} external variant="ghost" icon={<GitHubIcon size={18} />}>
+            Source
+          </ButtonLink>
+        )}
         {project.live && (
           <ButtonLink
             href={project.live}
@@ -207,8 +216,9 @@ export function Projects() {
           title="Things I've built."
         >
           <p>
-            A distributed C++ backend, a deployment platform in progress, the testing setup behind
-            them, and a load-balanced C++ socket server. Select any component to see how it works.
+            A distributed C++ backend, a deployment platform in progress, an AI voice safety call
+            built at the Talkdesk AI Hackday, the testing setup behind them, and a load-balanced C++
+            socket server. Select any component to see how it works.
           </p>
         </SectionHeading>
 
@@ -218,6 +228,9 @@ export function Projects() {
           </Reveal>
           <Reveal>
             <DeployX project={projectById('deployx')} />
+          </Reveal>
+          <Reveal>
+            <Supporting project={projectById('rakshak')} />
           </Reveal>
           <Reveal>
             <Supporting project={projectById('api-testing')} />
